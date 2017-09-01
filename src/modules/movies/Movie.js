@@ -227,7 +227,7 @@ class Movie extends Component {
 								/>
 							)}>
 							{
-								this.props.type === 'movie' && (
+								!!info.casts && (
 									<Casts tabLabel="CASTS" info={info} getTabHeight={this._getTabHeight} />
 								)
 							}

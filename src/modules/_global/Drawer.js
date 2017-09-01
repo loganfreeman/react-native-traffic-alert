@@ -17,9 +17,6 @@ class Drawer extends Component {
 
 		this._goToMovies = this._goToMovies.bind(this);
 		this._openSearch = this._openSearch.bind(this);
-		this._gotoRun = this._gotoRun.bind(this);
-		this._gotoFishing = this._gotoFishing.bind(this);
-		this._goToStocking = this._goToStocking.bind(this);
 		this._goToShows = this._goToShows.bind(this);
 	}
 
@@ -51,16 +48,6 @@ class Drawer extends Component {
 		});
 	}
 
-	_goToStocking() {
-		this._toggleDrawer();
-		this.props.navigator.showModal({
-			screen: 'movieapp.Stocking',
-			title: 'Stocking Report',
-			animated: true, // does the resetTo have transition animation or does it happen immediately (optional)
-  		animationType: 'fade'
-		});
-	}
-
 	_toggleDrawer() {
 		this.props.navigator.toggleDrawer({
 			to: 'closed',
@@ -69,26 +56,10 @@ class Drawer extends Component {
 		});
 	}
 
-	_gotoRun() {
-
-	}
-
-	_gotoFishing() {
-		this._toggleDrawer();
-		this.props.navigator.popToRoot({
-			screen: 'movieapp.FishingReport',
-			title: 'Fishing Report',
-			animated: true, // does the resetTo have transition animation or does it happen immediately (optional)
-  		animationType: 'fade'
-		});
-	}
 
 	render() {
 		const iconSearch = (<Icon name="md-search" size={26} color="#9F9F9F" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
 		const iconMovies = (<Icon name="md-film" size={26} color="#9F9F9F" style={[styles.drawerListIcon, { paddingLeft: 3 }]} />);
-		const iconRun = (<Icon name="md-walk" size={26} color="#9F9F9F" style={[styles.drawerListIcon, { paddingLeft: 3 }]} />);
-		const iconFish = (<Icon name="ios-boat" size={26} color="#9F9F9F" style={[styles.drawerListIcon, { paddingLeft: 3 }]} />);
-		const iconStocking = (<Icon name="md-bookmark" size={26} color="#9F9F9F" style={styles.drawerListIcon} />);
 		const iconTV = (<Icon name="ios-desktop" size={26} color="#9F9F9F" style={styles.drawerListIcon} />);
 		return (
 			<LinearGradient colors={['rgba(0, 0, 0, 0.7)', 'rgba(0,0,0, 0.9)', 'rgba(0,0,0, 1)']} style={styles.linearGradient}>
@@ -107,30 +78,6 @@ class Drawer extends Component {
 								{iconMovies}
 								<Text style={styles.drawerListItemText}>
 									Movies
-								</Text>
-							</View>
-						</TouchableOpacity>
-						<TouchableOpacity onPress={() => ToastAndroid.show('Coming Soon!', ToastAndroid.SHORT)}>
-							<View style={styles.drawerListItem}>
-								{iconRun}
-								<Text style={styles.drawerListItemText}>
-									All Trails
-								</Text>
-							</View>
-						</TouchableOpacity>
-						<TouchableOpacity onPress={this._gotoFishing}>
-							<View style={styles.drawerListItem}>
-								{iconFish}
-								<Text style={styles.drawerListItemText}>
-									Fishing Report
-								</Text>
-							</View>
-						</TouchableOpacity>
-						<TouchableOpacity onPress={this._goToStocking}>
-							<View style={styles.drawerListItem}>
-								{iconStocking}
-								<Text style={styles.drawerListItemText}>
-									Stocking Report
 								</Text>
 							</View>
 						</TouchableOpacity>
