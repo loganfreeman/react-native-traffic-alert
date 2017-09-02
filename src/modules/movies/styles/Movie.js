@@ -71,7 +71,14 @@ const styles = StyleSheet.create({
 		fontSize: 15
 	},
 	cardGenre: {
+		flexDirection: 'row',
+		flexWrap: 'wrap'
+	},
+	cardButtonGroup: {
 		flexDirection: 'row'
+	},
+	cardButton: {
+		marginLeft: 5
 	},
 	cardGenreItem: {
 		textAlign: 'left',
@@ -82,6 +89,10 @@ const styles = StyleSheet.create({
 	cardNumbers: {
 		flexDirection: 'row',
 		marginTop: 5
+	},
+	cardText: {
+		color: 'white',
+		fontWeight: 'bold'
 	},
 	cardStar: {
 		flexDirection: 'row'

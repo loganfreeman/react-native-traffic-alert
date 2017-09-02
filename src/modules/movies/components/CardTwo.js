@@ -15,7 +15,7 @@ const CardTwo = ({ info, viewMovie }) => (
 			<Image source={{ uri: `${TMDB_IMG_URL}/w185/${info.poster_path}` }} style={styles.cardImage} />
 			<View style={styles.cardTitleContainer}>
 				<Text style={styles.cardTitle} numberOfLines={2}>
-					{info.original_title}
+					{info.original_title || info.original_name}
 				</Text>
 			</View>
 		</View>

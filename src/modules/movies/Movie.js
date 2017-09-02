@@ -6,6 +6,7 @@ import {
 	ScrollView,
 	Text,
 	ToastAndroid,
+	TouchableOpacity,
 	View
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -25,6 +26,7 @@ import ProgressBar from '../_global/ProgressBar';
 import Trailers from './tabs/Trailers';
 import styles from './styles/Movie';
 import { TMDB_IMG_URL, YOUTUBE_API_KEY, YOUTUBE_URL } from '../../constants/api';
+import Share from 'react-native-share';
 
 class Movie extends Component {
 	constructor(props) {
@@ -148,8 +150,24 @@ class Movie extends Component {
 		}
 	}
 
+	_OnPressShareButton(type) {
+		const { details } = this.props;
+		let shareOptions = {
+      title: details.original_title || details.original_name,
+      message: details.overview,
+      url: details.homepage,
+      subject: "Share Link" //  for email
+    };
+		Share.shareSingle(Object.assign(shareOptions, {
+	    "social": type
+	  }));
+	}
+
 	render() {
 		const iconStar = <Icon name="md-star" size={16} color="#F5B642" />;
+		const iconFacebook = <Icon name="logo-facebook" size={32} color="#F5B642" />;
+		const iconTwitter = <Icon name="logo-twitter" size={32} color="#F5B642" />;
+		const iconGooglePlus = <Icon name="logo-googleplus" size={32} color="#F5B642" />;
 		const { details } = this.props;
 		const info = details;
 
@@ -197,7 +215,7 @@ class Movie extends Component {
 					<View style={styles.cardContainer}>
 						<Image source={{ uri: `${TMDB_IMG_URL}/w185/${info.poster_path}` }} style={styles.cardImage} />
 						<View style={styles.cardDetails}>
-							<Text style={styles.cardTitle}>{info.original_title}</Text>
+							<Text style={styles.cardTitle}>{info.original_title || info.original_name}</Text>
 							<Text style={styles.cardTagline}>{info.tagline}</Text>
 							<View style={styles.cardGenre}>
 								{
@@ -206,13 +224,24 @@ class Movie extends Component {
 									))
 								}
 							</View>
-							<View style={styles.cardNumbers}>
-								<View style={styles.cardStar}>
-									{iconStar}
-									<Text style={styles.cardStarRatings}>8.9</Text>
-								</View>
-								<Text style={styles.cardRunningHours} />
-							</View>
+							{
+								info.hasOwnProperty('homepage') && !!info.homepage && (
+									<View style={styles.cardButtonGroup}>
+										<Text style={styles.cardText}>Share: </Text>
+										<TouchableOpacity style={styles.cardButton} onPress={this._OnPressShareButton.bind(this, 'facebook')}>
+											{iconFacebook}
+										</TouchableOpacity>
+										<TouchableOpacity style={styles.cardButton} onPress={this._OnPressShareButton.bind(this, 'twitter')}>
+											{iconTwitter}
+										</TouchableOpacity>
+										<TouchableOpacity style={styles.cardButton} onPress={this._OnPressShareButton.bind(this, 'googleplus')}>
+											{iconGooglePlus}
+										</TouchableOpacity>
+									</View>
+								)
+							}
+
+
 						</View>
 					</View>
 					<View style={styles.contentContainer}>

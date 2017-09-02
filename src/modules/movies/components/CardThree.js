@@ -31,23 +31,29 @@ class CardThree extends Component {
 							<Text
 								style={styles.cardTitle}
 								numberOfLines={3}>
-								{info.original_title}
+								{info.original_title || info.original_name}
 							</Text>
 							{
 								info.hasOwnProperty('release_date') && (
 									<View style={styles.cardGenre}>
-										<Text style={styles.cardGenreItem}>{info.release_date.substring(0, 4)}</Text>
+										<Text style={styles.cardDescription}>Release Date: </Text><Text style={styles.cardDescription}>{info.release_date}</Text>
 									</View>
 								)
 							}
-
-							<View style={styles.cardNumbers}>
-								<View style={styles.cardStar}>
-									{iconStar}
-									<Text style={styles.cardStarRatings}>{info.vote_average.toFixed(1)}</Text>
-								</View>
-								<Text style={styles.cardRunningHours} />
-							</View>
+							{
+								info.hasOwnProperty('first_air_date') && (
+									<View style={styles.cardGenre}>
+										<Text style={styles.cardDescription}>First Air Date: </Text><Text style={styles.cardDescription}>{info.first_air_date}</Text>
+									</View>
+								)
+							}
+							{
+								info.hasOwnProperty('last_air_date') && (
+									<View style={styles.cardGenre}>
+										<Text style={styles.cardDescription}>Last Air Date: </Text><Text style={styles.cardDescription}>{info.last_air_date}</Text>
+									</View>
+								)
+							}
 							<Text style={styles.cardDescription} numberOfLines={3}>
 								{info.overview}
 							</Text>

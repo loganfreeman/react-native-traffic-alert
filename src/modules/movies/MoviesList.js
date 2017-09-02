@@ -58,27 +58,7 @@ class MoviesList extends Component {
 				currentPage: this.state.currentPage + 1
 			});
 
-			let page;
-			if (this.state.currentPage === 1) {
-				page = 2;
-				this.setState({ currentPage: 2 });
-			} else {
-				page = this.state.currentPage + 1;
-			}
-
-			axios.get(`${TMDB_URL}/movie/${type}?api_key=${TMDB_API_KEY}&page=${page}`)
-				.then(res => {
-					const data = this.state.list.results;
-					const newData = res.data.results;
-
-					newData.map((item, index) => data.push(item));
-
-					this.setState({
-						dataSource: this.state.dataSource.cloneWithRows(this.state.list.results)
-					});
-				}).catch(err => {
-					console.log('next page', err); // eslint-disable-line
-				});
+			this._retrieveMoviesList();
 		}
 	}
 

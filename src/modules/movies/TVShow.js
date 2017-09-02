@@ -173,7 +173,7 @@ class TVShow extends Component {
 								{iconPlay}
 								<Text
 									style={styles.browseListItemText}
-									onPress={this._viewShowsList.bind(this, 'tv/on_the_air', 'Now Playing')}>
+									onPress={this._viewShowsList.bind(this, 'tv/on_the_air', 'On the air')}>
 									On the air
 								</Text>
 							</View>

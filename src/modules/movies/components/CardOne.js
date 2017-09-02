@@ -21,17 +21,10 @@ const CardOne = ({ info, viewMovie }) => (
 			<Image source={{ uri: `${TMDB_IMG_URL}/w185/${info.poster_path}` }} style={styles.cardImage} />
 			<View style={styles.cardDetails}>
 				<Text style={styles.cardTitle} numberOfLines={2}>
-					{info.original_title}
+					{info.original_title || info.original_name}
 				</Text>
 				<View style={styles.cardGenre}>
 					<Text style={styles.cardGenreItem}>Action</Text>
-				</View>
-				<View style={styles.cardNumbers}>
-					<View style={styles.cardStar}>
-						{iconStar}
-						<Text style={styles.cardStarRatings}>8.9</Text>
-					</View>
-					<Text style={styles.cardRunningHours} />
 				</View>
 				<Text style={styles.cardDescription} numberOfLines={3}>
 					{info.overview}

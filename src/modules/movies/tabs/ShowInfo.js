@@ -25,15 +25,6 @@ const ShowInfo = ({ info }) => {
 					{info.overview}
 				</Text>
 			</View>
-      <View style={{flex: 1, flexDirection: 'row'}}>
-      {
-        _.range(stars).map((e, i) => {
-          return (
-            <Icon name="md-star" size={24} color="#F5B642" key={i}/>
-          );
-        })
-      }
-      </View>
 			<View style={styles.labelRow}>
 				<Text style={styles.label}>First Air Date</Text>
 				<Text style={styles.value}>{firstAirDate}</Text>
