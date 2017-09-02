@@ -217,14 +217,18 @@ class Movie extends Component {
 						<View style={styles.cardDetails}>
 							<View style={{flex:1, flexDirection:'row',justifyContent:'space-between'}}>
 								<Text style={styles.cardTitle}>{info.original_title || info.original_name}</Text>
-								<TouchableOpacity><Icon name="md-more" style={styles.cardTitle}/></TouchableOpacity>
+								<TouchableOpacity><Icon name="md-more" style={styles.option}/></TouchableOpacity>
 							</View>
-							<Text style={styles.cardTagline}>{info.tagline}</Text>
+							{
+								!!info.tagline && (
+									<Text style={styles.cardTagline}>{info.tagline}</Text>
+								)
+							}
 							<View style={styles.cardGenre}>
 								<Text style={styles.cardGenreItem}>{info.genres.map(item => item.name).join(', ')}</Text>
 							</View>
 							{
-								info.hasOwnProperty('homepage') && !!info.homepage && (
+								!!info.homepage && (
 									<View style={styles.cardButtonGroup}>
 										<TouchableOpacity style={styles.cardButton} onPress={this._OnPressShareButton.bind(this, 'facebook')}>
 											{iconFacebook}

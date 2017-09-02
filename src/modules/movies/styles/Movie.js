@@ -64,7 +64,15 @@ const styles = StyleSheet.create({
 		color: 'white',
 		fontSize: 19,
 		fontWeight: '500',
-		paddingTop: 10
+		paddingTop: 10,
+		paddingRight: 10
+	},
+	option: {
+		color: 'white',
+		fontSize: 19,
+		fontWeight: '500',
+		paddingTop: 10,
+
 	},
 	cardTagline: {
 		color: 'white',
