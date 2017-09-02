@@ -219,11 +219,7 @@ class Movie extends Component {
 								<Text style={styles.cardTitle}>{info.original_title || info.original_name}</Text>
 								<TouchableOpacity><Icon name="md-more" style={styles.option}/></TouchableOpacity>
 							</View>
-							{
-								!!info.tagline && (
-									<Text style={styles.cardTagline}>{info.tagline}</Text>
-								)
-							}
+							<Text style={styles.cardTagline}>{info.tagline}</Text>
 							<View style={styles.cardGenre}>
 								<Text style={styles.cardGenreItem}>{info.genres.map(item => item.name).join(', ')}</Text>
 							</View>

@@ -18,7 +18,6 @@ const Casts = ({ info, getTabHeight }) => {
 	function onPress(person_id) {
 		axios.get(`${TMDB_URL}/person/${person_id}?api_key=${TMDB_API_KEY}`)
 							.then(res => {
-								console.error(`${IMDB_URL}/name/${res.data.imdb_id}`)
 								Linking.openURL(`${IMDB_URL}/name/${res.data.imdb_id}`)
 							});
 	}

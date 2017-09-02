@@ -13,7 +13,6 @@ const Info = ({ info }) => {
 	const director = _.filter(info.casts.crew, { department: 'Directing', job: 'Director' });
 	const releaseDate = moment(info.release_date).format('LL');
 	const budget = (info.budget === 0 ? 'n/a' : numeral(info.budget).format('$ 0,0'));
-
 	return (
 		<View style={styles.container}>
 			<View style={styles.overview}>
@@ -30,8 +29,9 @@ const Info = ({ info }) => {
 			</View>
 			<View style={styles.labelRow}>
 				<Text style={styles.label}>Directed By</Text>
-				<Text style={styles.value}>{director[0].name}</Text>
+				<Text style={styles.value}>{!!director.length && director[0].name}</Text>
 			</View>
+
 			<View style={styles.labelRow}>
 				<Text style={styles.label}>Budget</Text>
 				<Text style={styles.value}>{budget}</Text>
