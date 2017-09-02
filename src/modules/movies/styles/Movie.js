@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
 		flexDirection: 'row'
 	},
 	cardButton: {
-		marginLeft: 5
+		marginRight: 5
 	},
 	cardGenreItem: {
 		textAlign: 'left',
