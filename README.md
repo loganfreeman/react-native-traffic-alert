@@ -58,6 +58,11 @@ $ react-native run-android
 $ react-native run-ios
 ```
 
+### How to change applicationId
+
+1. android/app/build.gradle
+2. android/app/src/main/AndroidManifest.xml
+3. `applicationId` in `build.gradle` has to match package name in `AndroidManifest.xml`
 
 # Default Installation instructions
 
