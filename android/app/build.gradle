@@ -91,7 +91,7 @@ android {
         applicationId "com.loganfreeman.movie"
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 2
+        versionCode 3
         versionName "2.2.2"
         ndk {
             abiFilters "armeabi-v7a", "x86"
