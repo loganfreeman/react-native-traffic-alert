@@ -218,16 +218,11 @@ class Movie extends Component {
 							<Text style={styles.cardTitle}>{info.original_title || info.original_name}</Text>
 							<Text style={styles.cardTagline}>{info.tagline}</Text>
 							<View style={styles.cardGenre}>
-								{
-									info.genres.map(item => (
-										<Text key={item.id} style={styles.cardGenreItem}>{item.name}</Text>
-									))
-								}
+								<Text style={styles.cardGenreItem}>{info.genres.map(item => item.name).join(', ')}</Text>
 							</View>
 							{
 								info.hasOwnProperty('homepage') && !!info.homepage && (
 									<View style={styles.cardButtonGroup}>
-										<Text style={styles.cardText}>Share: </Text>
 										<TouchableOpacity style={styles.cardButton} onPress={this._OnPressShareButton.bind(this, 'facebook')}>
 											{iconFacebook}
 										</TouchableOpacity>
