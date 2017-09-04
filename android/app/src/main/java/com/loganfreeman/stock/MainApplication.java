@@ -1,8 +1,8 @@
-package com.loganfreeman.movie;
+package com.loganfreeman.stock;
 
 import android.support.annotation.NonNull;
 
-import com.loganfreeman.movie.BuildConfig;
+import com.loganfreeman.stock.BuildConfig;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.facebook.react.ReactPackage;
 import com.reactnativenavigation.NavigationApplication;
