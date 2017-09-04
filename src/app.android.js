@@ -28,7 +28,7 @@ const navigatorStyle = {
 Navigation.startSingleScreenApp({
 	screen: {
 		screen: 'movieapp.Movies',
-		title: 'Movies',
+		title: 'Stock',
 		navigatorStyle,
 		leftButtons: [
 			{
