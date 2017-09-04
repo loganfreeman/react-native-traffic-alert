@@ -12,14 +12,14 @@ import Swiper from 'react-native-swiper';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import * as moviesActions from './movies.actions';
+import * as moviesActions from './stock.actions';
 import CardOne from './components/CardOne';
 import CardTwo from './components/CardTwo';
 import ProgressBar from '../_global/ProgressBar';
-import styles from './styles/Movies';
+import styles from './styles/Stock';
 import { iconsMap } from '../../utils/AppIcons';
 
-class Movies extends Component {
+class Stock extends Component {
 	constructor(props) {
 		super(props);
 
@@ -79,7 +79,7 @@ class Movies extends Component {
 	}
 }
 
-Movies.propTypes = {
+Stock.propTypes = {
 	actions: PropTypes.object.isRequired,
 	navigator: PropTypes.object
 };
@@ -97,7 +97,7 @@ if (Platform.OS === 'ios') {
 	};
 }
 
-Movies.navigatorStyle = {
+Stock.navigatorStyle = {
 	...navigatorStyle,
 	statusBarColor: 'black',
 	statusBarTextColorScheme: 'light',
@@ -116,4 +116,4 @@ function mapDispatchToProps(dispatch) {
 	};
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Movies);
+export default connect(mapStateToProps, mapDispatchToProps)(Stock);

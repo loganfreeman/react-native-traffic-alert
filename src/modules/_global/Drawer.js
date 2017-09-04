@@ -23,7 +23,7 @@ class Drawer extends Component {
 	_goToMovies() {
 		this._toggleDrawer();
 		this.props.navigator.showModal({
-			screen: 'movieapp.Movies',
+			screen: 'movieapp.Stock',
 			title: 'Stock',
 			animated: true, // does the resetTo have transition animation or does it happen immediately (optional)
   		animationType: 'fade'

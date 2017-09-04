@@ -72,7 +72,7 @@ CardThree.propTypes = {
 
 function mapStateToProps(state, ownProps) {
 	return {
-		moviesGenres: state.movies.genres
+		moviesGenres: state.stock.genres
 	};
 }
 
