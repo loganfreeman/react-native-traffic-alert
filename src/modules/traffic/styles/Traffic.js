@@ -2,18 +2,34 @@ import { Platform, StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
 	container: {
-		backgroundColor: 'black',
+		flex: 1,
+		backgroundColor: '#0a0a0a'
+	},
+	textInput: {
+		backgroundColor: 'white',
 		...Platform.select({
 			ios: {
-				paddingTop: 64
+				height: 35
+			},
+			android: {
+				height: 48
 			}
 		})
 	},
-	progressBar: {
-		backgroundColor: '#0a0a0a',
-		flex: 1,
-		justifyContent: 'center',
-		alignItems: 'center'
+	searchboxBorder: {
+		borderRadius: 3,
+		backgroundColor: 'white',
+		paddingHorizontal: 3
+	},
+	searchbox: {
+		backgroundColor: '#191919',
+		paddingHorizontal: 16,
+		paddingVertical: 8,
+		marginBottom: 16
+	},
+	seperator: {
+		marginTop: 10,
+		backgroundColor: '#8E8E8E'
 	},
 	listHeading: {
 		paddingHorizontal: 16,
@@ -36,44 +52,6 @@ const styles = StyleSheet.create({
 			},
 			android: {
 				fontSize: 16
-			}
-		})
-	},
-	browseList: {
-		marginTop: 30,
-		paddingHorizontal: 16,
-		...Platform.select({
-			ios: {
-				marginBottom: 60
-			},
-			android: {
-				marginBottom: 30
-			}
-		})
-	},
-	browseListItem: {
-		...Platform.select({
-			ios: {
-				paddingVertical: 8
-			},
-			android: {
-				paddingVertical: 10
-			}
-		}),
-		flexDirection: 'row'
-	},
-	browseListItemText: {
-		flex: 1,
-		color: 'white',
-		paddingLeft: 10,
-		...Platform.select({
-			ios: {
-				fontSize: 15,
-				fontWeight: '500'
-			},
-			android: {
-				fontSize: 16,
-				fontWeight: '100'
 			}
 		})
 	}

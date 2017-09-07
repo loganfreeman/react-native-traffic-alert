@@ -5,7 +5,8 @@ import {
 	Text,
 	TouchableOpacity,
 	View,
-	Platform
+	Platform,
+	TextInput
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Swiper from 'react-native-swiper';
@@ -29,6 +30,7 @@ class Traffic extends Component {
 		};
 
 		this._onRefresh = this._onRefresh.bind(this);
+		this._handleTextInput = this._handleTextInput.bind(this);
 		this.props.navigator.setOnNavigatorEvent(this._onNavigatorEvent.bind(this));
 	}
 
@@ -52,6 +54,10 @@ class Traffic extends Component {
 		}
 	}
 
+	_handleTextInput(event) {
+		const query = event.nativeEvent.text;
+	}
+
 	render() {
 		const { nowPlayingMovies, popularMovies } = this.props;
 		const iconPlay = <Icon name="md-play" size={21} color="#9F9F9F" style={{ paddingLeft: 3, width: 22 }} />;
@@ -60,20 +66,25 @@ class Traffic extends Component {
 		const iconPopular = <Icon name="md-heart" size={21} color="#9F9F9F" style={{ width: 22 }} />;
 
 		return (
-			<ScrollView
-				style={styles.container}
-				refreshControl={
-					<RefreshControl
-						refreshing={this.state.isRefreshing}
-						onRefresh={this._onRefresh}
-						colors={['#EA0000']}
-						tintColor="white"
-						title="loading..."
-						titleColor="white"
-						progressBackgroundColor="white"
-					/>
-				}>
-			</ScrollView>
+			<View style={styles.container}>
+				<View style={styles.listHeading}>
+					<Text style={styles.listHeadingLeft}>
+						Where you want to go:
+					</Text>
+				</View>
+				<View style={styles.searchbox}>
+					<View style={styles.searchboxBorder}>
+						<TextInput
+							style={styles.textInput}
+							autoFocus
+							returnKeyType={'search'}
+							value={this.state.query}
+							onChange={this._handleTextInput}
+							underlineColorAndroid="transparent"
+						/>
+					</View>
+				</View>
+			</View>
 		);
 	}
 }
