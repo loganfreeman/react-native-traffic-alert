@@ -33,11 +33,11 @@ class App extends Component {
 		Navigation.startTabBasedApp({
 			tabs: [
 				{
-					label: 'Stock',
-					screen: 'movieapp.Stock',
+					label: 'Traffic',
+					screen: 'movieapp.Traffic',
 					icon: iconsMap['ios-film-outline'],
 					selectedIcon: iconsMap['ios-film'],
-					title: 'Stock',
+					title: 'Traffic',
 					navigatorStyle,
 					navigatorButtons: {
 						rightButtons: [
@@ -51,10 +51,10 @@ class App extends Component {
 				},
 				{
 					label: 'TV Shows',
-					screen: 'movieapp.Stock',
+					screen: 'movieapp.Traffic',
 					icon: iconsMap['ios-desktop-outline'],
 					selectedIcon: iconsMap['ios-desktop'],
-					title: 'Stock',
+					title: 'Traffic',
 					navigatorStyle
 				}
 			],

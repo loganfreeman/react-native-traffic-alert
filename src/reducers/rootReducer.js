@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-import stock from '../modules/stock/stock.reducer';
+import traffic from '../modules/traffic/traffic.reducer';
 
 const rootReducer = combineReducers({
-	stock
+	traffic
 });
 
 export default rootReducer;

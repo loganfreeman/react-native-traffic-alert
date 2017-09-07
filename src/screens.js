@@ -2,9 +2,9 @@
 import { Navigation } from 'react-native-navigation';
 
 import Drawer from './modules/_global/Drawer';
-import Stock from './modules/stock/Stock';
+import Traffic from './modules/traffic/Traffic';
 
 export function registerScreens(store, Provider) {
-	Navigation.registerComponent('movieapp.Stock', () => Stock, store, Provider);
+	Navigation.registerComponent('movieapp.Traffic', () => Traffic, store, Provider);
 	Navigation.registerComponent('movieapp.Drawer', () => Drawer);
 }

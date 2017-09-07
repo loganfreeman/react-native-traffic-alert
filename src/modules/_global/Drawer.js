@@ -23,8 +23,8 @@ class Drawer extends Component {
 	_goToMovies() {
 		this._toggleDrawer();
 		this.props.navigator.showModal({
-			screen: 'movieapp.Stock',
-			title: 'Stock',
+			screen: 'movieapp.Traffic',
+			title: 'Traffic',
 			animated: true, // does the resetTo have transition animation or does it happen immediately (optional)
   		animationType: 'fade'
 		});
@@ -49,7 +49,7 @@ class Drawer extends Component {
 							<View style={styles.drawerListItem}>
 								{iconMovies}
 								<Text style={styles.drawerListItemText}>
-									Stock
+									Traffic
 								</Text>
 							</View>
 						</TouchableOpacity>
