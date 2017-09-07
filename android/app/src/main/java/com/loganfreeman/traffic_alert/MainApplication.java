@@ -14,6 +14,8 @@ import cl.json.RNSharePackage;
 import java.util.Arrays;
 import java.util.List;
 
+import com.arttitude360.reactnative.rngoogleplaces.RNGooglePlacesPackage;
+
 public class MainApplication extends NavigationApplication {
 
   // private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
@@ -41,7 +43,8 @@ public class MainApplication extends NavigationApplication {
 		new VectorIconsPackage(),
 		new LinearGradientPackage(),
 		new ReactNativeConfigPackage(),
-    new RNSharePackage()
+    new RNSharePackage(),
+    new RNGooglePlacesPackage()
     );
   }
 

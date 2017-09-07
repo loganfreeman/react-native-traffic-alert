@@ -20,6 +20,8 @@ import ProgressBar from '../_global/ProgressBar';
 import styles from './styles/Traffic';
 import { iconsMap } from '../../utils/AppIcons';
 
+import RNGooglePlaces from 'react-native-google-places';
+
 class Traffic extends Component {
 	constructor(props) {
 		super(props);
@@ -58,6 +60,16 @@ class Traffic extends Component {
 		const query = event.nativeEvent.text;
 	}
 
+	openSearchModal() {
+    RNGooglePlaces.openAutocompleteModal()
+    .then((place) => {
+		console.log(place);
+		// place represents user's selection from the
+		// suggestions and it is a simplified Google Place object.
+    })
+    .catch(error => console.log(error.message));  // error is a Javascript Error object
+  }
+
 	render() {
 		const { nowPlayingMovies, popularMovies } = this.props;
 		const iconPlay = <Icon name="md-play" size={21} color="#9F9F9F" style={{ paddingLeft: 3, width: 22 }} />;
@@ -84,6 +96,12 @@ class Traffic extends Component {
 						/>
 					</View>
 				</View>
+				<TouchableOpacity
+          style={styles.button}
+          onPress={() => this.openSearchModal()}
+        >
+          <Text style={styles.listHeadingLeft}>Pick a Place</Text>
+        </TouchableOpacity>
 			</View>
 		);
 	}
