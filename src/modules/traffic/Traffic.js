@@ -29,7 +29,10 @@ class Traffic extends Component {
 
 		this.state = {
 			isLoading: true,
-			isRefreshing: false
+			isRefreshing: false,
+			place: {
+
+			}
 		};
 
 		this._onRefresh = this._onRefresh.bind(this);
@@ -64,11 +67,15 @@ class Traffic extends Component {
 	openSearchModal() {
     RNGooglePlaces.openAutocompleteModal()
     .then((place) => {
-		console.log(place);
+		this.setState({
+			place
+		})
 		// place represents user's selection from the
 		// suggestions and it is a simplified Google Place object.
     })
-    .catch(error => console.log(error.message));  // error is a Javascript Error object
+    .catch(error => this.setState({
+			error: error.message
+		}));  // error is a Javascript Error object
   }
 
 	render() {
@@ -80,11 +87,24 @@ class Traffic extends Component {
 
 		return (
 			<View style={styles.container}>
+
 				<Button
 					title='Pick a Place'
 					onPress={() => this.openSearchModal()}
 				>
 				</Button>
+				<View style={styles.listHeading}>
+					<Text style={styles.listHeadingLeft}>Address: </Text>
+					<Text style={styles.descriptionText}>{this.state.place.address}</Text>
+				</View>
+				<View style={styles.listHeading}>
+					<Text style={styles.listHeadingLeft}>Latitude: </Text>
+					<Text style={styles.listHeadingRight}>{this.state.place.latitude}</Text>
+				</View>
+				<View style={styles.listHeading}>
+					<Text style={styles.listHeadingLeft}>Longitude: </Text>
+					<Text style={styles.listHeadingRight}>{this.state.place.longitude}</Text>
+				</View>
 			</View>
 		);
 	}

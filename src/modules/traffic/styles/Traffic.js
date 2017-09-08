@@ -24,16 +24,12 @@ const styles = StyleSheet.create({
 			}
 		})
 	},
-	searchboxBorder: {
-		borderRadius: 3,
-		backgroundColor: 'white',
-		paddingHorizontal: 3
-	},
-	searchbox: {
-		backgroundColor: '#191919',
-		paddingHorizontal: 16,
-		paddingVertical: 8,
-		marginBottom: 16
+	descriptionText: {
+	  color: 'white',//Colors.transparentColor,
+	  fontSize: 16,
+	  flex: 0.8,
+	  textAlign: 'center',
+	  flexWrap: 'wrap'
 	},
 	seperator: {
 		marginTop: 10,
