@@ -1,4 +1,8 @@
-import { Platform, StyleSheet } from 'react-native';
+import {
+	Platform,
+	StyleSheet,
+	Dimensions
+} from 'react-native';
 
 const styles = StyleSheet.create({
 	container: {
@@ -38,7 +42,12 @@ const styles = StyleSheet.create({
 	},
 	listHeadingRight: {
 
-	}
+	},
+	map: {
+		flex: 1,
+		width: '100%',
+		marginTop: 10
+  }
 });
 
 export default styles;

@@ -21,9 +21,13 @@ import ProgressBar from '../_global/ProgressBar';
 import styles from './styles/Traffic';
 import { iconsMap } from '../../utils/AppIcons';
 
+import { GOOGLE_API_KEY } from '../../constants/api';
+
 import { Card } from 'react-native-elements';
 
 import RNGooglePlaces from 'react-native-google-places';
+
+import MapView from 'react-native-maps';
 
 class Traffic extends Component {
 	constructor(props) {
@@ -151,6 +155,20 @@ class Traffic extends Component {
 								</View>
 							</Card>
 						</View>
+					)
+				}
+
+				{
+					this.state.showRoute && (
+						<MapView
+							style={styles.map}
+					    initialRegion={{
+					      latitude: 37.78825,
+					      longitude: -122.4324,
+					      latitudeDelta: 0.0922,
+					      longitudeDelta: 0.0421,
+					    }}
+					  />
 					)
 				}
 

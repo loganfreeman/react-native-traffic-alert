@@ -15,6 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.arttitude360.reactnative.rngoogleplaces.RNGooglePlacesPackage;
+import com.airbnb.android.react.maps.MapsPackage;
 
 public class MainApplication extends NavigationApplication {
 
@@ -44,7 +45,8 @@ public class MainApplication extends NavigationApplication {
 		new LinearGradientPackage(),
 		new ReactNativeConfigPackage(),
     new RNSharePackage(),
-    new RNGooglePlacesPackage()
+    new RNGooglePlacesPackage(),
+    new MapsPackage()
     );
   }
 

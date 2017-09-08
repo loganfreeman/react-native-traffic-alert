@@ -15,3 +15,5 @@ export const FISHING_REPORT_URL = "https://wildlife.utah.gov/hotspots/";
 export const STOCKING_URL = "https://dwrapps.utah.gov/fishtrafficing/Fish";
 
 export const IMDB_URL = "http://www.imdb.com/";
+
+export const GOOGLE_API_KEY = Config.GOOGLE_API_KEY;
