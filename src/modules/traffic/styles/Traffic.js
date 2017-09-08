@@ -3,7 +3,15 @@ import { Platform, StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: '#0a0a0a'
+		flexDirection: 'column',
+		backgroundColor: '#0a0a0a',
+		alignItems: 'center',
+		justifyContent: 'center'
+	},
+	flexCenter: {
+		flex: 1,
+		flexDirection: 'row',
+		justifyContent: 'center'
 	},
 	textInput: {
 		backgroundColor: 'white',

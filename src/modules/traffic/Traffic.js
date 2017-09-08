@@ -6,7 +6,8 @@ import {
 	TouchableOpacity,
 	View,
 	Platform,
-	TextInput
+	TextInput,
+	Button
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Swiper from 'react-native-swiper';
@@ -79,29 +80,11 @@ class Traffic extends Component {
 
 		return (
 			<View style={styles.container}>
-				<View style={styles.listHeading}>
-					<Text style={styles.listHeadingLeft}>
-						Where you want to go:
-					</Text>
-				</View>
-				<View style={styles.searchbox}>
-					<View style={styles.searchboxBorder}>
-						<TextInput
-							style={styles.textInput}
-							autoFocus
-							returnKeyType={'search'}
-							value={this.state.query}
-							onChange={this._handleTextInput}
-							underlineColorAndroid="transparent"
-						/>
-					</View>
-				</View>
-				<TouchableOpacity
-          style={styles.button}
-          onPress={() => this.openSearchModal()}
-        >
-          <Text style={styles.listHeadingLeft}>Pick a Place</Text>
-        </TouchableOpacity>
+				<Button
+					title='Pick a Place'
+					onPress={() => this.openSearchModal()}
+				>
+				</Button>
 			</View>
 		);
 	}
