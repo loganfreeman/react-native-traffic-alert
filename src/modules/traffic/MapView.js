@@ -47,18 +47,33 @@ class MapViewDemo extends Component {
 
   getDirections(startLoc, destinationLoc) {
     axios.get(`${MAP_DIRECTION_API_URL}?origin=${startLoc}&destination=${destinationLoc}&key=${GOOGLE_API_KEY}&alternatives=true`).then(res => {
-      let points = Polyline.decode(res.data.routes[0].overview_polyline.points);
-      let coords = points.map((point, index) => {
-          return  {
-              latitude : point[0],
-              longitude : point[1]
-          }
-      })
+      let coords = this.calculateCoords(res.data.routes[0].overview_polyline.points);
       this.setState({
         coords,
-        routes: res.data.routes
+        routes: res.data.routes,
+        currentRoute: 0
       })
       return coords
+    });
+  }
+
+  showAlternative() {
+    if(this.state.routes.length > 1) {
+      let currentRoute = (this.state.currentRoute + 1) % this.state.routes.length;
+      let coords = this.calculateCoords(this.state.routes[currentRoute].overview_polyline.points);
+      this.setState({
+        currentRoute,
+        coords
+      })
+    }
+  }
+
+  calculateCoords(points) {
+    return Polyline.decode(points).map((point, index) => {
+        return  {
+            latitude : point[0],
+            longitude : point[1]
+        }
     });
   }
 
@@ -86,21 +101,6 @@ class MapViewDemo extends Component {
     this.map.animateToCoordinate(this.randomCoordinate());
   }
 
-  randomCoordinate() {
-    const region = this.state.region;
-    return {
-      latitude: region.latitude + ((Math.random() - 0.5) * (region.latitudeDelta / 2)),
-      longitude: region.longitude + ((Math.random() - 0.5) * (region.longitudeDelta / 2)),
-    };
-  }
-
-  randomRegion() {
-    return {
-      ...this.state.region,
-      ...this.randomCoordinate(),
-    };
-  }
-
   render() {
     return (
       <View style={styles.container}>
@@ -123,10 +123,10 @@ class MapViewDemo extends Component {
         </View>
         <View style={styles.buttonContainer}>
           <TouchableOpacity
-            onPress={() => this.jumpRandom()}
+            onPress={() => this.showAlternative()}
             style={[styles.bubble, styles.button]}
           >
-            <Text style={styles.buttonText}>Jump</Text>
+            <Text style={styles.buttonText}>Show Alternative</Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => this.animateRandom()}
