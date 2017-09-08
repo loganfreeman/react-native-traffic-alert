@@ -104,7 +104,7 @@ class Traffic extends Component {
   }
 
 	getRoutes() {
-		if(!!this.state.current) {
+		if(this.state.current) {
 			this.props.navigator.showModal({
 				screen: 'movieapp.MapView',
 				title: 'MapView',
