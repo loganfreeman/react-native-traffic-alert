@@ -38,7 +38,8 @@ class MapViewDemo extends Component {
         latitudeDelta: LATITUDE_DELTA,
         longitudeDelta: LONGITUDE_DELTA,
       },
-      coords: []
+      coords: [],
+      routes: []
     };
 
     this.getDirections(this.getLocationString(props.current), this.getLocationString(props.destination));
