@@ -15,7 +15,8 @@ import * as moviesActions from './traffic.actions';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-
+import axios from 'axios';
+import Polyline from '@mapbox/polyline';
 
 const { width, height } = Dimensions.get('window');
 
@@ -25,17 +26,40 @@ const LONGITUDE = -122.4324;
 const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
+const MAP_DIRECTION_API_URL = "https://maps.googleapis.com/maps/api/directions/json";
+
 class MapViewDemo extends Component {
   constructor(props) {
     super(props);
     this.state = {
       region: {
-        latitude: props.region.latitude,
-        longitude: props.region.longitude,
+        latitude: props.current.latitude,
+        longitude: props.current.longitude,
         latitudeDelta: LATITUDE_DELTA,
         longitudeDelta: LONGITUDE_DELTA,
       },
+      coords: []
     };
+
+    this.getDirections(this.getLocationString(props.current), this.getLocationString(props.destination));
+  }
+
+  getDirections(startLoc, destinationLoc) {
+    axios.get(`${MAP_DIRECTION_API_URL}?origin=${startLoc}&destination=${destinationLoc}`).then(res => {
+      let points = Polyline.decode(res.data.routes[0].overview_polyline.points);
+      let coords = points.map((point, index) => {
+          return  {
+              latitude : point[0],
+              longitude : point[1]
+          }
+      })
+      this.setState({coords: coords})
+      return coords
+    });
+  }
+
+  getLocationString(pos) {
+    return `${pos.latitude},${pos.longitude}`;
   }
 
   componentWillReceiveProps(nextProps) {
@@ -81,8 +105,12 @@ class MapViewDemo extends Component {
           mapType={MAP_TYPES.TERRAIN}
           style={styles.map}
           initialRegion={this.state.region}
-          onRegionChange={region => this.onRegionChange(region)}
-        />
+          onRegionChange={region => this.onRegionChange(region)}>
+          <MapView.Polyline
+            coordinates={this.state.coords}
+            strokeWidth={2}
+            strokeColor="red"/>
+        </MapView>
         <View style={[styles.bubble, styles.latlng]}>
           <Text style={{ textAlign: 'center' }}>
             {this.state.region.latitude.toPrecision(7)},
@@ -117,7 +145,8 @@ class MapViewDemo extends Component {
 MapViewDemo.propTypes = {
 	actions: PropTypes.object.isRequired,
 	navigator: PropTypes.object,
-  region: PropTypes.object.isRequired
+  current: PropTypes.object.isRequired,
+  destination: PropTypes.object.isRequired
 };
 
 let navigatorStyle = {};

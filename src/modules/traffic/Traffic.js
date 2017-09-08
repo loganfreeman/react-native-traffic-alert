@@ -104,14 +104,15 @@ class Traffic extends Component {
   }
 
 	getRoutes() {
-		if(this.state.current) {
+		if(this.state.current && this.state.place) {
 			this.props.navigator.showModal({
 				screen: 'movieapp.MapView',
 				title: 'MapView',
 				animated: true, // does the resetTo have transition animation or does it happen immediately (optional)
 				animationType: 'fade',
 				passProps: {
-					region: this.state.current
+					current: this.state.current,
+					destination: this.state.place
 				}
 			});
 		}
