@@ -28,11 +28,10 @@ const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 class MapViewDemo extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       region: {
-        latitude: LATITUDE,
-        longitude: LONGITUDE,
+        latitude: props.region.latitude,
+        longitude: props.region.longitude,
         latitudeDelta: LATITUDE_DELTA,
         longitudeDelta: LONGITUDE_DELTA,
       },
