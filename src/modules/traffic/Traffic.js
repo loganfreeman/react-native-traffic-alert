@@ -76,7 +76,8 @@ class Traffic extends Component {
     RNGooglePlaces.openAutocompleteModal()
     .then((place) => {
 		this.setState({
-			place
+			place,
+			showRoute: false
 		})
 		// place represents user's selection from the
 		// suggestions and it is a simplified Google Place object.
@@ -87,7 +88,9 @@ class Traffic extends Component {
   }
 
 	getRoutes() {
-
+		this.setState({
+			showRoute: true
+		})
 	}
 
 	render() {
@@ -114,36 +117,42 @@ class Traffic extends Component {
 					onPress={() => this.getRoutes()}>
 				</Button>
 				</View>
-				<Card title="Current Location" containerStyle={styles.card}>
-					<View style={styles.listHeading}>
-						<Text style={styles.listHeadingLeft}>Address: </Text>
-						<Text style={styles.descriptionText}>{this.state.current.address}</Text>
-					</View>
-					<View style={styles.listHeading}>
-						<Text style={styles.listHeadingLeft}>Latitude: </Text>
-						<Text style={styles.listHeadingRight}>{this.state.current.latitude}</Text>
-					</View>
-					<View style={styles.listHeading}>
-						<Text style={styles.listHeadingLeft}>Longitude: </Text>
-						<Text style={styles.listHeadingRight}>{this.state.current.longitude}</Text>
-					</View>
-				</Card>
+				{
+					!this.state.showRoute && (
+						<View>
+							<Card title="Current Location" containerStyle={styles.card}>
+								<View style={styles.listHeading}>
+									<Text style={styles.listHeadingLeft}>Address: </Text>
+									<Text style={styles.descriptionText}>{this.state.current.address}</Text>
+								</View>
+								<View style={styles.listHeading}>
+									<Text style={styles.listHeadingLeft}>Latitude: </Text>
+									<Text style={styles.listHeadingRight}>{this.state.current.latitude}</Text>
+								</View>
+								<View style={styles.listHeading}>
+									<Text style={styles.listHeadingLeft}>Longitude: </Text>
+									<Text style={styles.listHeadingRight}>{this.state.current.longitude}</Text>
+								</View>
+							</Card>
 
 
-				<Card title="Place to go" containerStyle={styles.card}>
-					<View style={styles.listHeading}>
-						<Text style={styles.listHeadingLeft}>Address: </Text>
-						<Text style={styles.descriptionText}>{this.state.place.address}</Text>
-					</View>
-					<View style={styles.listHeading}>
-						<Text style={styles.listHeadingLeft}>Latitude: </Text>
-						<Text style={styles.listHeadingRight}>{this.state.place.latitude}</Text>
-					</View>
-					<View style={styles.listHeading}>
-						<Text style={styles.listHeadingLeft}>Longitude: </Text>
-						<Text style={styles.listHeadingRight}>{this.state.place.longitude}</Text>
-					</View>
-				</Card>
+							<Card title="Place to go" containerStyle={styles.card}>
+								<View style={styles.listHeading}>
+									<Text style={styles.listHeadingLeft}>Address: </Text>
+									<Text style={styles.descriptionText}>{this.state.place.address}</Text>
+								</View>
+								<View style={styles.listHeading}>
+									<Text style={styles.listHeadingLeft}>Latitude: </Text>
+									<Text style={styles.listHeadingRight}>{this.state.place.latitude}</Text>
+								</View>
+								<View style={styles.listHeading}>
+									<Text style={styles.listHeadingLeft}>Longitude: </Text>
+									<Text style={styles.listHeadingRight}>{this.state.place.longitude}</Text>
+								</View>
+							</Card>
+						</View>
+					)
+				}
 
 
 			</View>
