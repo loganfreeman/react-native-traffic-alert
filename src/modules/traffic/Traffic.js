@@ -21,6 +21,8 @@ import ProgressBar from '../_global/ProgressBar';
 import styles from './styles/Traffic';
 import { iconsMap } from '../../utils/AppIcons';
 
+import { Card } from 'react-native-elements';
+
 import RNGooglePlaces from 'react-native-google-places';
 
 class Traffic extends Component {
@@ -84,6 +86,10 @@ class Traffic extends Component {
 		}));  // error is a Javascript Error object
   }
 
+	getRoutes() {
+
+	}
+
 	render() {
 		const { nowPlayingMovies, popularMovies } = this.props;
 		const iconPlay = <Icon name="md-play" size={21} color="#9F9F9F" style={{ paddingLeft: 3, width: 22 }} />;
@@ -93,42 +99,53 @@ class Traffic extends Component {
 
 		return (
 			<View style={styles.container}>
-			{
-				!!this.state.error && (
-					<Text style={styles.descriptionText}>{this.state.error}</Text>
-				)
-			}
-			<Text style={styles.listHeadingLeft}>
-				Current Location:
-			</Text>
-			<View style={styles.listHeading}>
-				<Text style={styles.listHeadingLeft}>Address: </Text>
-				<Text style={styles.descriptionText}>{this.state.current.address}</Text>
-			</View>
-			<View style={styles.listHeading}>
-				<Text style={styles.listHeadingLeft}>Latitude: </Text>
-				<Text style={styles.listHeadingRight}>{this.state.current.latitude}</Text>
-			</View>
-			<View style={styles.listHeading}>
-				<Text style={styles.listHeadingLeft}>Longitude: </Text>
-				<Text style={styles.listHeadingRight}>{this.state.current.longitude}</Text>
-			</View>
+				{
+					!!this.state.error && (
+						<Text style={styles.descriptionText}>{this.state.error}</Text>
+					)
+				}
+				<View style={styles.buttonGroup}>
 				<Button
 					title='Pick a Place'
 					onPress={() => this.openSearchModal()}>
 				</Button>
-				<View style={styles.listHeading}>
-					<Text style={styles.listHeadingLeft}>Address: </Text>
-					<Text style={styles.descriptionText}>{this.state.place.address}</Text>
+				<Button
+					title='Get routes'
+					onPress={() => this.getRoutes()}>
+				</Button>
 				</View>
-				<View style={styles.listHeading}>
-					<Text style={styles.listHeadingLeft}>Latitude: </Text>
-					<Text style={styles.listHeadingRight}>{this.state.place.latitude}</Text>
-				</View>
-				<View style={styles.listHeading}>
-					<Text style={styles.listHeadingLeft}>Longitude: </Text>
-					<Text style={styles.listHeadingRight}>{this.state.place.longitude}</Text>
-				</View>
+				<Card title="Current Location" containerStyle={styles.card}>
+					<View style={styles.listHeading}>
+						<Text style={styles.listHeadingLeft}>Address: </Text>
+						<Text style={styles.descriptionText}>{this.state.current.address}</Text>
+					</View>
+					<View style={styles.listHeading}>
+						<Text style={styles.listHeadingLeft}>Latitude: </Text>
+						<Text style={styles.listHeadingRight}>{this.state.current.latitude}</Text>
+					</View>
+					<View style={styles.listHeading}>
+						<Text style={styles.listHeadingLeft}>Longitude: </Text>
+						<Text style={styles.listHeadingRight}>{this.state.current.longitude}</Text>
+					</View>
+				</Card>
+
+
+				<Card title="Place to go" containerStyle={styles.card}>
+					<View style={styles.listHeading}>
+						<Text style={styles.listHeadingLeft}>Address: </Text>
+						<Text style={styles.descriptionText}>{this.state.place.address}</Text>
+					</View>
+					<View style={styles.listHeading}>
+						<Text style={styles.listHeadingLeft}>Latitude: </Text>
+						<Text style={styles.listHeadingRight}>{this.state.place.latitude}</Text>
+					</View>
+					<View style={styles.listHeading}>
+						<Text style={styles.listHeadingLeft}>Longitude: </Text>
+						<Text style={styles.listHeadingRight}>{this.state.place.longitude}</Text>
+					</View>
+				</Card>
+
+
 			</View>
 		);
 	}

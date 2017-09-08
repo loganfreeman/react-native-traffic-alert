@@ -6,28 +6,20 @@ const styles = StyleSheet.create({
 		flexDirection: 'column',
 		backgroundColor: '#0a0a0a',
 		alignItems: 'center',
-		justifyContent: 'center'
+	},
+	card: {
+		alignSelf: 'stretch',
 	},
 	flexCenter: {
-		flex: 1,
 		flexDirection: 'row',
-		justifyContent: 'center'
 	},
-	textInput: {
-		backgroundColor: 'white',
-		...Platform.select({
-			ios: {
-				height: 35
-			},
-			android: {
-				height: 48
-			}
-		})
+	buttonGroup: {
+		flexDirection: 'row',
+		justifyContent: 'space-around',
+		alignSelf: 'stretch',
 	},
 	descriptionText: {
-	  color: 'white',//Colors.transparentColor,
-	  fontSize: 16,
-	  flex: 0.8,
+		flex: 0.8,
 	  textAlign: 'center',
 	  flexWrap: 'wrap'
 	},
@@ -36,28 +28,16 @@ const styles = StyleSheet.create({
 		backgroundColor: '#8E8E8E'
 	},
 	listHeading: {
-		paddingHorizontal: 16,
 		flexDirection: 'row',
 		justifyContent: 'space-between',
 		alignItems: 'center',
-		marginBottom: 15,
-		marginTop: 30
+		marginBottom: 10
 	},
 	listHeadingLeft: {
-		color: 'white',
 		fontWeight: 'bold',
-		fontSize: 18
 	},
 	listHeadingRight: {
-		color: 'white',
-		...Platform.select({
-			ios: {
-				fontSize: 15
-			},
-			android: {
-				fontSize: 16
-			}
-		})
+
 	}
 });
 
