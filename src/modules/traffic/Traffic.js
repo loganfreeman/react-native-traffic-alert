@@ -28,29 +28,39 @@ class Traffic extends Component {
 		super(props);
 
 		this.state = {
-			isLoading: true,
-			isRefreshing: false,
 			place: {
+
+			},
+			current: {
 
 			}
 		};
 
-		this._onRefresh = this._onRefresh.bind(this);
-		this._handleTextInput = this._handleTextInput.bind(this);
 		this.props.navigator.setOnNavigatorEvent(this._onNavigatorEvent.bind(this));
 	}
 
 	componentWillMount() {
+		this.getMyLocation();
+	}
+
+	getMyLocation() {
+		RNGooglePlaces.getCurrentPlace()
+		.then((currentLocation) => {
+		this.setState({
+			current: currentLocation[0]
+		})
+		// place represents user's selection from the
+		// suggestions and it is a simplified Google Place object.
+		})
+		.catch(error => {
+			this.setState({
+			error: error.message
+		})});  // error is a Javascript Error object
 	}
 
 	componentWillReceiveProps(nextProps) {
-		this.setState({ isLoading: false });
 	}
 
-
-	_onRefresh() {
-		this.setState({ isRefreshing: true });
-	}
 
 	_onNavigatorEvent(event) {
 		if (event.type === 'NavBarButtonPress') {
@@ -58,10 +68,6 @@ class Traffic extends Component {
 				this.props.navigator.dismissModal();
 			}
 		}
-	}
-
-	_handleTextInput(event) {
-		const query = event.nativeEvent.text;
 	}
 
 	openSearchModal() {
@@ -87,11 +93,29 @@ class Traffic extends Component {
 
 		return (
 			<View style={styles.container}>
-
+			{
+				!!this.state.error && (
+					<Text style={styles.descriptionText}>{this.state.error}</Text>
+				)
+			}
+			<Text style={styles.listHeadingLeft}>
+				Current Location:
+			</Text>
+			<View style={styles.listHeading}>
+				<Text style={styles.listHeadingLeft}>Address: </Text>
+				<Text style={styles.descriptionText}>{this.state.current.address}</Text>
+			</View>
+			<View style={styles.listHeading}>
+				<Text style={styles.listHeadingLeft}>Latitude: </Text>
+				<Text style={styles.listHeadingRight}>{this.state.current.latitude}</Text>
+			</View>
+			<View style={styles.listHeading}>
+				<Text style={styles.listHeadingLeft}>Longitude: </Text>
+				<Text style={styles.listHeadingRight}>{this.state.current.longitude}</Text>
+			</View>
 				<Button
 					title='Pick a Place'
-					onPress={() => this.openSearchModal()}
-				>
+					onPress={() => this.openSearchModal()}>
 				</Button>
 				<View style={styles.listHeading}>
 					<Text style={styles.listHeadingLeft}>Address: </Text>
