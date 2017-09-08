@@ -104,12 +104,18 @@ class Traffic extends Component {
   }
 
 	getRoutes() {
-		this.props.navigator.showModal({
-			screen: 'movieapp.MapView',
-			title: 'MapView',
-			animated: true, // does the resetTo have transition animation or does it happen immediately (optional)
-			animationType: 'fade'
-		});
+		if(!!this.state.current) {
+			this.props.navigator.showModal({
+				screen: 'movieapp.MapView',
+				title: 'MapView',
+				animated: true, // does the resetTo have transition animation or does it happen immediately (optional)
+				animationType: 'fade',
+				passProps: {
+					region: this.state.current
+				}
+			});
+		}
+
 	}
 
 
@@ -139,38 +145,36 @@ class Traffic extends Component {
 					onPress={() => this.getRoutes()}>
 				</Button>
 				</View>
-				<View>
-					<Card title="Current Location" containerStyle={styles.card}>
-						<View style={styles.listHeading}>
-							<Text style={styles.listHeadingLeft}>Address: </Text>
-							<Text style={styles.descriptionText}>{this.state.current.address}</Text>
-						</View>
-						<View style={styles.listHeading}>
-							<Text style={styles.listHeadingLeft}>Latitude: </Text>
-							<Text style={styles.listHeadingRight}>{this.state.current.latitude}</Text>
-						</View>
-						<View style={styles.listHeading}>
-							<Text style={styles.listHeadingLeft}>Longitude: </Text>
-							<Text style={styles.listHeadingRight}>{this.state.current.longitude}</Text>
-						</View>
-					</Card>
+				<Card title="Current Location" containerStyle={styles.card}>
+					<View style={styles.listHeading}>
+						<Text style={styles.listHeadingLeft}>Address: </Text>
+						<Text style={styles.descriptionText}>{this.state.current.address}</Text>
+					</View>
+					<View style={styles.listHeading}>
+						<Text style={styles.listHeadingLeft}>Latitude: </Text>
+						<Text style={styles.listHeadingRight}>{this.state.current.latitude}</Text>
+					</View>
+					<View style={styles.listHeading}>
+						<Text style={styles.listHeadingLeft}>Longitude: </Text>
+						<Text style={styles.listHeadingRight}>{this.state.current.longitude}</Text>
+					</View>
+				</Card>
 
 
-					<Card title="Place to go" containerStyle={styles.card}>
-						<View style={styles.listHeading}>
-							<Text style={styles.listHeadingLeft}>Address: </Text>
-							<Text style={styles.descriptionText}>{this.state.place.address}</Text>
-						</View>
-						<View style={styles.listHeading}>
-							<Text style={styles.listHeadingLeft}>Latitude: </Text>
-							<Text style={styles.listHeadingRight}>{this.state.place.latitude}</Text>
-						</View>
-						<View style={styles.listHeading}>
-							<Text style={styles.listHeadingLeft}>Longitude: </Text>
-							<Text style={styles.listHeadingRight}>{this.state.place.longitude}</Text>
-						</View>
-					</Card>
-				</View>
+				<Card title="Place to go" containerStyle={styles.card}>
+					<View style={styles.listHeading}>
+						<Text style={styles.listHeadingLeft}>Address: </Text>
+						<Text style={styles.descriptionText}>{this.state.place.address}</Text>
+					</View>
+					<View style={styles.listHeading}>
+						<Text style={styles.listHeadingLeft}>Latitude: </Text>
+						<Text style={styles.listHeadingRight}>{this.state.place.latitude}</Text>
+					</View>
+					<View style={styles.listHeading}>
+						<Text style={styles.listHeadingLeft}>Longitude: </Text>
+						<Text style={styles.listHeadingRight}>{this.state.place.longitude}</Text>
+					</View>
+				</Card>
 
 			</View>
 		);

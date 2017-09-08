@@ -39,6 +39,10 @@ class MapViewDemo extends Component {
     };
   }
 
+  componentWillReceiveProps(nextProps) {
+
+	}
+
   onRegionChange(region) {
     this.setState({ region });
   }
@@ -113,7 +117,8 @@ class MapViewDemo extends Component {
 
 MapViewDemo.propTypes = {
 	actions: PropTypes.object.isRequired,
-	navigator: PropTypes.object
+	navigator: PropTypes.object,
+  region: PropTypes.object.isRequired
 };
 
 let navigatorStyle = {};
