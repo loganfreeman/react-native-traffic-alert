@@ -53,7 +53,10 @@ class MapViewDemo extends Component {
               longitude : point[1]
           }
       })
-      this.setState({coords: coords})
+      this.setState({
+        coords,
+        routes: res.data.routes
+      })
       return coords
     });
   }
