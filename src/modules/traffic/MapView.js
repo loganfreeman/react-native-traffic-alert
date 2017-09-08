@@ -12,7 +12,7 @@ import MapView, { MAP_TYPES } from 'react-native-maps';
 
 import styles from './styles/MapViewDemo';
 import * as moviesActions from './traffic.actions';
-
+import { GOOGLE_API_KEY } from '../../constants/api';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import axios from 'axios';
@@ -46,7 +46,7 @@ class MapViewDemo extends Component {
   }
 
   getDirections(startLoc, destinationLoc) {
-    axios.get(`${MAP_DIRECTION_API_URL}?origin=${startLoc}&destination=${destinationLoc}`).then(res => {
+    axios.get(`${MAP_DIRECTION_API_URL}?origin=${startLoc}&destination=${destinationLoc}&key=${GOOGLE_API_KEY}&alternatives=true`).then(res => {
       let points = Polyline.decode(res.data.routes[0].overview_polyline.points);
       let coords = points.map((point, index) => {
           return  {
