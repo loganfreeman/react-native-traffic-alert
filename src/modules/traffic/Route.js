@@ -5,7 +5,8 @@ import {
   Text,
   Dimensions,
   TouchableOpacity,
-  Platform
+  Platform,
+  ScrollView
 } from 'react-native';
 
 import MapView, { MAP_TYPES } from 'react-native-maps';
@@ -33,7 +34,7 @@ class Route extends Component {
   constructor(props) {
     super(props);
     this.state = {
-
+      current: 0
     };
 
   }
@@ -95,9 +96,38 @@ class Route extends Component {
   }
 
   render() {
+    const route = this.props.routes[this.state.current];
+    const leg = route.legs[0];
+    const steps = leg.steps;
     return (
       <View style={styles.container}>
-
+        <ScrollView style={styles.map}>
+          <Card>
+            <Text>
+              {route.summary}
+            </Text>
+          </Card>
+        </ScrollView>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            onPress={() => this.showAlternative()}
+            style={[styles.bubble, styles.button]}
+          >
+            <Text style={styles.buttonText}>Show Alternative</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => this.showRoute()}
+            style={[styles.bubble, styles.button]}
+          >
+            <Text style={styles.buttonText}>Show route detail</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => this.animateRandomCoordinate()}
+            style={[styles.bubble, styles.button]}
+          >
+            <Text style={styles.buttonText}>Animate (Coordinate)</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }

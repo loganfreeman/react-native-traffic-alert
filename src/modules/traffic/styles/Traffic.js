@@ -21,6 +21,7 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		justifyContent: 'space-around',
 		alignSelf: 'stretch',
+		marginTop: 10
 	},
 	descriptionText: {
 		flex: 0.8,

@@ -6,13 +6,11 @@ import {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
 		flexDirection: 'column',
-		backgroundColor: '#0a0a0a',
-		alignItems: 'center',
+		flex: 1
   },
   map: {
-    ...StyleSheet.absoluteFillObject,
+		alignSelf: 'stretch'
   },
   bubble: {
     backgroundColor: 'rgba(255,255,255,0.7)',

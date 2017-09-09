@@ -8,12 +8,14 @@ import {
 	Platform,
 	TextInput,
 	Button,
-	Dimensions
+	Dimensions,
+	AsyncStorage
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Swiper from 'react-native-swiper';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import Storage from 'react-native-storage';
 
 import * as moviesActions from './traffic.actions';
 import CardOne from './components/CardOne';
@@ -37,6 +39,23 @@ const LONGITUDE = -122.4324;
 const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
+const storage = new Storage({
+	// maximum capacity, default 1000
+	size: 1000,
+
+	// Use AsyncStorage for RN, or window.localStorage for web.
+	// If not set, data would be lost after reload.
+	storageBackend: AsyncStorage,
+
+	// expire time, default 1 day(1000 * 3600 * 24 milliseconds).
+	// can be null, which means never expire.
+	defaultExpires: null,
+
+	// cache data in the memory. default is true.
+	enableCache: true
+
+})
+
 class Traffic extends Component {
 	constructor(props) {
 		super(props);
@@ -51,6 +70,18 @@ class Traffic extends Component {
 		};
 
 		this.props.navigator.setOnNavigatorEvent(this._onNavigatorEvent.bind(this));
+
+		this.loadState();
+	}
+
+	loadState() {
+		storage.load({
+			key: 'destination'
+		}).then(place => {
+			this.setState({
+				place
+			})
+		})
 	}
 
 	componentWillMount() {
@@ -119,6 +150,13 @@ class Traffic extends Component {
 
 	}
 
+	savePlace() {
+		storage.save({
+			key: 'destination',
+			data: this.state.place
+		})
+	}
+
 
 
 
@@ -136,16 +174,7 @@ class Traffic extends Component {
 						<Text style={styles.descriptionText}>{this.state.error}</Text>
 					)
 				}
-				<View style={styles.buttonGroup}>
-				<Button
-					title='Pick a Place'
-					onPress={() => this.openSearchModal()}>
-				</Button>
-				<Button
-					title='Get routes'
-					onPress={() => this.getRoutes()}>
-				</Button>
-				</View>
+
 				<Card title="Current Location" containerStyle={styles.card}>
 					<View style={styles.listHeading}>
 						<Text style={styles.listHeadingLeft}>Address: </Text>
@@ -176,6 +205,21 @@ class Traffic extends Component {
 						<Text style={styles.listHeadingRight}>{this.state.place.longitude}</Text>
 					</View>
 				</Card>
+
+				<View style={styles.buttonGroup}>
+					<Button
+						title='Pick a Place'
+						onPress={() => this.openSearchModal()}>
+					</Button>
+					<Button
+						title='Get routes'
+						onPress={() => this.getRoutes()}>
+					</Button>
+					<Button
+						title='Save place'
+						onPress={() => this.savePlace()}>
+					</Button>
+				</View>
 
 			</View>
 		);
