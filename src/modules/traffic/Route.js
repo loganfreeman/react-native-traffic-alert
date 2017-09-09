@@ -9,8 +9,9 @@ import {
 } from 'react-native';
 
 import MapView, { MAP_TYPES } from 'react-native-maps';
+import { Card } from 'react-native-elements';
 
-import styles from './styles/MapViewDemo';
+import styles from './styles/Route';
 import * as moviesActions from './traffic.actions';
 import { GOOGLE_API_KEY } from '../../constants/api';
 import { bindActionCreators } from 'redux';
@@ -28,21 +29,13 @@ const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
 const MAP_DIRECTION_API_URL = "https://maps.googleapis.com/maps/api/directions/json";
 
-class MapViewDemo extends Component {
+class Route extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      region: {
-        latitude: props.current.latitude,
-        longitude: props.current.longitude,
-        latitudeDelta: LATITUDE_DELTA,
-        longitudeDelta: LONGITUDE_DELTA,
-      },
-      coords: [],
-      routes: []
+
     };
 
-    this.getDirections(this.getLocationString(props.current), this.getLocationString(props.destination));
   }
 
   getDirections(startLoc, destinationLoc) {
@@ -66,18 +59,6 @@ class MapViewDemo extends Component {
         coords
       })
     }
-  }
-
-  showRoute() {
-    this.props.navigator.showModal({
-      screen: 'movieapp.Route',
-      title: 'Routes',
-      animated: true, // does the resetTo have transition animation or does it happen immediately (optional)
-      animationType: 'fade',
-      passProps: {
-        routes: this.state.routes,
-      }
-    });
   }
 
   calculateCoords(points) {
@@ -116,53 +97,16 @@ class MapViewDemo extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <MapView
-          ref={ref => { this.map = ref; }}
-          mapType={MAP_TYPES.TERRAIN}
-          style={styles.map}
-          initialRegion={this.state.region}
-          onRegionChange={region => this.onRegionChange(region)}>
-          <MapView.Polyline
-            coordinates={this.state.coords}
-            strokeWidth={2}
-            strokeColor="red"/>
-        </MapView>
-        <View style={[styles.bubble, styles.latlng]}>
-          <Text style={{ textAlign: 'center' }}>
-            {this.state.region.latitude.toPrecision(7)},
-            {this.state.region.longitude.toPrecision(7)}
-          </Text>
-        </View>
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity
-            onPress={() => this.showAlternative()}
-            style={[styles.bubble, styles.button]}
-          >
-            <Text style={styles.buttonText}>Show Alternative</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => this.showRoute()}
-            style={[styles.bubble, styles.button]}
-          >
-            <Text style={styles.buttonText}>Show route detail</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => this.animateRandomCoordinate()}
-            style={[styles.bubble, styles.button]}
-          >
-            <Text style={styles.buttonText}>Animate (Coordinate)</Text>
-          </TouchableOpacity>
-        </View>
+
       </View>
     );
   }
 }
 
-MapViewDemo.propTypes = {
+Route.propTypes = {
 	actions: PropTypes.object.isRequired,
 	navigator: PropTypes.object,
-  current: PropTypes.object.isRequired,
-  destination: PropTypes.object.isRequired
+  routes: PropTypes.array.isRequired
 };
 
 let navigatorStyle = {};
@@ -178,7 +122,7 @@ if (Platform.OS === 'ios') {
 	};
 }
 
-MapViewDemo.navigatorStyle = {
+Route.navigatorStyle = {
 	...navigatorStyle,
 	statusBarColor: 'black',
 	statusBarTextColorScheme: 'light',
@@ -197,4 +141,4 @@ function mapDispatchToProps(dispatch) {
 	};
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(MapViewDemo);
+export default connect(mapStateToProps, mapDispatchToProps)(Route);
