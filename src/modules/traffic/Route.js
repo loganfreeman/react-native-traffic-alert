@@ -11,6 +11,7 @@ import {
 
 import MapView, { MAP_TYPES } from 'react-native-maps';
 import { Card } from 'react-native-elements';
+import HTMLView from 'react-native-htmlview';
 
 import styles from './styles/Route';
 import * as moviesActions from './traffic.actions';
@@ -19,6 +20,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import Polyline from '@mapbox/polyline';
+import Share from 'react-native-share';
 
 const { width, height } = Dimensions.get('window');
 
@@ -34,7 +36,8 @@ class Route extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      current: 0
+      route: null,
+      showRoutes: true
     };
 
   }
@@ -79,55 +82,64 @@ class Route extends Component {
 
 	}
 
-  onRegionChange(region) {
-    this.setState({ region });
+  onRouteSelect(route) {
+    this.setState({
+      route
+    })
   }
 
-  jumpRandom() {
-    this.setState({ region: this.randomRegion() });
-  }
-
-  animateRandom() {
-    this.map.animateToRegion(this.randomRegion());
-  }
-
-  animateRandomCoordinate() {
-    this.map.animateToCoordinate(this.randomCoordinate());
+  onScrollEndDrag() {
+    this.setState({
+      showRoutes: !this.state.showRoutes
+    })
   }
 
   render() {
-    const route = this.props.routes[this.state.current];
-    const leg = route.legs[0];
-    const steps = leg.steps;
+    const htmlViewStyle = StyleSheet.create({
+      p: {
+        fontWeight: '300',
+        fontSize: 16,
+        marginBottom: 10,
+        borderBottomWidth: 1
+      },
+    });
+    let steps = [];
+    if(this.state.route) {
+      steps = this.state.route.legs[0].steps.map((step, i) => {
+        return (
+          <View style={styles.step} key={i}>
+            <HTMLView stylesheet={htmlViewStyle} value={`<p>${step.html_instructions}</p>`} />
+          </View>
+        );
+      })
+    }
+    const { routes } = this.props;
     return (
       <View style={styles.container}>
-        <ScrollView style={styles.map}>
-          <Card>
-            <Text>
-              {route.summary}
-            </Text>
-          </Card>
-        </ScrollView>
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity
-            onPress={() => this.showAlternative()}
-            style={[styles.bubble, styles.button]}
-          >
-            <Text style={styles.buttonText}>Show Alternative</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => this.showRoute()}
-            style={[styles.bubble, styles.button]}
-          >
-            <Text style={styles.buttonText}>Show route detail</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => this.animateRandomCoordinate()}
-            style={[styles.bubble, styles.button]}
-          >
-            <Text style={styles.buttonText}>Animate (Coordinate)</Text>
-          </TouchableOpacity>
-        </View>
+        {
+          this.state.showRoutes && (
+            <Card title='choose a route'>
+              {
+                routes.map((route, i) => {
+                  return (
+                    <View key={i}>
+                      <TouchableOpacity onPress={this.onRouteSelect.bind(this, route)}><Text style={styles.summary}>{route.summary}</Text></TouchableOpacity>
+                    </View>
+                  )
+                })
+              }
+            </Card>
+          )
+        }
+        {
+          this.state.route && (
+            <ScrollView>
+              <Card title="route detail (press me to share)">
+                {steps}
+              </Card>
+            </ScrollView>
+          )
+        }
       </View>
     );
   }

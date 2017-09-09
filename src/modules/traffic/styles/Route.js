@@ -4,14 +4,26 @@ import {
 	Dimensions
 } from 'react-native';
 
+let ScreenHeight = Dimensions.get("window").height;
+
 const styles = StyleSheet.create({
   container: {
-		flexDirection: 'column',
-		flex: 1
+		...StyleSheet.absoluteFillObject,
+		backgroundColor: 'white'
   },
   map: {
 		alignSelf: 'stretch'
   },
+	summary: {
+		fontSize: 24,
+		marginBottom: 10
+	},
+	steps: {
+		flex: 1
+	},
+	step: {
+		flexDirection: 'column'
+	},
   bubble: {
     backgroundColor: 'rgba(255,255,255,0.7)',
     paddingHorizontal: 18,
