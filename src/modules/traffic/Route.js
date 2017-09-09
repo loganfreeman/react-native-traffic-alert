@@ -75,7 +75,6 @@ class Route extends Component {
         fontWeight: '300',
         fontSize: 16,
         marginBottom: 10,
-        borderBottomWidth: 1
       },
     });
     const steps = route.legs[0].steps.map((step, i) => {
