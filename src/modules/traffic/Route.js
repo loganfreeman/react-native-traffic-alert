@@ -87,7 +87,7 @@ class Route extends Component {
     return (
       <View style={styles.container}>
         <ScrollView>
-          <Card title={route.summary}>
+          <Card title={`Via ${route.summary}`}>
             {steps}
           </Card>
         </ScrollView>
