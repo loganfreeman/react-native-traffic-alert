@@ -35,34 +35,8 @@ const MAP_DIRECTION_API_URL = "https://maps.googleapis.com/maps/api/directions/j
 class Route extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      route: props.routes[0],
-    };
-
   }
 
-  getDirections(startLoc, destinationLoc) {
-    axios.get(`${MAP_DIRECTION_API_URL}?origin=${startLoc}&destination=${destinationLoc}&key=${GOOGLE_API_KEY}&alternatives=true`).then(res => {
-      let coords = this.calculateCoords(res.data.routes[0].overview_polyline.points);
-      this.setState({
-        coords,
-        routes: res.data.routes,
-        currentRoute: 0
-      })
-      return coords
-    });
-  }
-
-  showAlternative() {
-    if(this.state.routes.length > 1) {
-      let currentRoute = (this.state.currentRoute + 1) % this.state.routes.length;
-      let coords = this.calculateCoords(this.state.routes[currentRoute].overview_polyline.points);
-      this.setState({
-        currentRoute,
-        coords
-      })
-    }
-  }
 
   calculateCoords(points) {
     return Polyline.decode(points).map((point, index) => {
@@ -94,6 +68,8 @@ class Route extends Component {
   }
 
   render() {
+    const { route } = this.props;
+
     const htmlViewStyle = StyleSheet.create({
       p: {
         fontWeight: '300',
@@ -102,14 +78,13 @@ class Route extends Component {
         borderBottomWidth: 1
       },
     });
-    const steps = this.state.route.legs[0].steps.map((step, i) => {
+    const steps = route.legs[0].steps.map((step, i) => {
       return (
         <View style={styles.step} key={i}>
           <HTMLView stylesheet={htmlViewStyle} value={`<p>${step.html_instructions}</p>`} />
         </View>
       );
     });
-    const { route } = this.state;
     return (
       <View style={styles.container}>
         <ScrollView>
@@ -125,7 +100,7 @@ class Route extends Component {
 Route.propTypes = {
 	actions: PropTypes.object.isRequired,
 	navigator: PropTypes.object,
-  routes: PropTypes.array.isRequired
+  route: PropTypes.object.isRequired
 };
 
 let navigatorStyle = {};

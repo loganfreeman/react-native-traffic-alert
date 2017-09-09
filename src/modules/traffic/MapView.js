@@ -75,7 +75,7 @@ class MapViewDemo extends Component {
       animated: true, // does the resetTo have transition animation or does it happen immediately (optional)
       animationType: 'fade',
       passProps: {
-        routes: this.state.routes,
+        route: this.state.routes[this.state.currentRoute],
       }
     });
   }
@@ -99,18 +99,6 @@ class MapViewDemo extends Component {
 
   onRegionChange(region) {
     this.setState({ region });
-  }
-
-  jumpRandom() {
-    this.setState({ region: this.randomRegion() });
-  }
-
-  animateRandom() {
-    this.map.animateToRegion(this.randomRegion());
-  }
-
-  animateRandomCoordinate() {
-    this.map.animateToCoordinate(this.randomCoordinate());
   }
 
   render() {
