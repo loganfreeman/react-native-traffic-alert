@@ -36,8 +36,7 @@ class Route extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      route: null,
-      showRoutes: true
+      route: props.routes[0],
     };
 
   }
@@ -103,43 +102,21 @@ class Route extends Component {
         borderBottomWidth: 1
       },
     });
-    let steps = [];
-    if(this.state.route) {
-      steps = this.state.route.legs[0].steps.map((step, i) => {
-        return (
-          <View style={styles.step} key={i}>
-            <HTMLView stylesheet={htmlViewStyle} value={`<p>${step.html_instructions}</p>`} />
-          </View>
-        );
-      })
-    }
-    const { routes } = this.props;
+    const steps = this.state.route.legs[0].steps.map((step, i) => {
+      return (
+        <View style={styles.step} key={i}>
+          <HTMLView stylesheet={htmlViewStyle} value={`<p>${step.html_instructions}</p>`} />
+        </View>
+      );
+    });
+    const { route } = this.state;
     return (
       <View style={styles.container}>
-        {
-          this.state.showRoutes && (
-            <Card title='choose a route'>
-              {
-                routes.map((route, i) => {
-                  return (
-                    <View key={i}>
-                      <TouchableOpacity onPress={this.onRouteSelect.bind(this, route)}><Text style={styles.summary}>{route.summary}</Text></TouchableOpacity>
-                    </View>
-                  )
-                })
-              }
-            </Card>
-          )
-        }
-        {
-          this.state.route && (
-            <ScrollView>
-              <Card title="route detail (press me to share)">
-                {steps}
-              </Card>
-            </ScrollView>
-          )
-        }
+        <ScrollView>
+          <Card title={route.summary}>
+            {steps}
+          </Card>
+        </ScrollView>
       </View>
     );
   }

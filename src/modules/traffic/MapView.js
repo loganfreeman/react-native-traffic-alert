@@ -146,12 +146,6 @@ class MapViewDemo extends Component {
           >
             <Text style={styles.buttonText}>Show route detail</Text>
           </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => this.animateRandomCoordinate()}
-            style={[styles.bubble, styles.button]}
-          >
-            <Text style={styles.buttonText}>Animate (Coordinate)</Text>
-          </TouchableOpacity>
         </View>
       </View>
     );
