@@ -27,7 +27,6 @@ const styles = StyleSheet.create({
     alignItems: 'stretch',
   },
   button: {
-    width: 100,
     paddingHorizontal: 8,
     alignItems: 'center',
     justifyContent: 'center',
@@ -35,7 +34,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flexDirection: 'row',
-    marginVertical: 20,
+    marginVertical: 10,
     backgroundColor: 'transparent',
   },
   buttonText: {
