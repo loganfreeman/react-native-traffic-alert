@@ -28,6 +28,8 @@ const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
 const MAP_DIRECTION_API_URL = "https://maps.googleapis.com/maps/api/directions/json";
 
+const DISTANCE_API_URL = "https://maps.googleapis.com/maps/api/distancematrix/json";
+
 class MapViewDemo extends Component {
   constructor(props) {
     super(props);
@@ -43,6 +45,7 @@ class MapViewDemo extends Component {
     };
 
     this.getDirections(this.getLocationString(props.current), this.getLocationString(props.destination));
+    this.getDistance(this.getLocationString(props.current), this.getLocationString(props.destination));
   }
 
   getDirections(startLoc, destinationLoc) {
@@ -54,6 +57,15 @@ class MapViewDemo extends Component {
         currentRoute: 0
       })
       return coords
+    });
+  }
+
+  getDistance(startLoc, destinationLoc) {
+    axios.get(`${DISTANCE_API_URL}?origins=${startLoc}&destinations=${destinationLoc}&key=${GOOGLE_API_KEY}&units=imperial`).then(res => {
+      this.setState({
+        duration: res.data.rows[0].elements[0].duration.text,
+        distance: res.data.rows[0].elements[0].distance.text
+      })
     });
   }
 
@@ -117,8 +129,8 @@ class MapViewDemo extends Component {
         </MapView>
         <View style={[styles.bubble, styles.latlng]}>
           <Text style={{ textAlign: 'center' }}>
-            {this.state.region.latitude.toPrecision(7)},
-            {this.state.region.longitude.toPrecision(7)}
+            {this.state.distance},
+            {this.state.duration}
           </Text>
         </View>
         <View style={styles.buttonContainer}>
