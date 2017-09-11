@@ -112,7 +112,7 @@ class MapViewDemo extends Component {
           onRegionChange={region => this.onRegionChange(region)}>
           <MapView.Polyline
             coordinates={this.state.coords}
-            strokeWidth={2}
+            strokeWidth={4}
             strokeColor="red"/>
         </MapView>
         <View style={[styles.bubble, styles.latlng]}>
