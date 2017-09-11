@@ -66,7 +66,9 @@ class MapViewDemo extends Component {
         duration: res.data.rows[0].elements[0].duration.text,
         distance: res.data.rows[0].elements[0].distance.text
       })
-    });
+    }).catch(error => {
+      console.log(error)
+    })
   }
 
   showAlternative() {
@@ -127,12 +129,16 @@ class MapViewDemo extends Component {
             strokeWidth={4}
             strokeColor="red"/>
         </MapView>
-        <View style={[styles.bubble, styles.latlng]}>
-          <Text style={{ textAlign: 'center' }}>
-            {this.state.distance},
-            {this.state.duration}
-          </Text>
-        </View>
+        {
+          this.state.duration && this.state.distance && (
+            <View style={[styles.bubble, styles.latlng]}>
+              <Text style={{ textAlign: 'center' }}>
+                {this.state.distance},
+                {this.state.duration}
+              </Text>
+            </View>            
+          )
+        }
         <View style={styles.buttonContainer}>
           <TouchableOpacity
             onPress={() => this.showAlternative()}

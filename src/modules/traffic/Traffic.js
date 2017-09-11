@@ -180,6 +180,20 @@ class Traffic extends Component {
 
 	}
 
+	showElevation() {
+		if(this.state.current) {
+			this.props.navigator.showModal({
+				screen: 'movieapp.Elevation',
+				title: 'Elevation',
+				animated: true, // does the resetTo have transition animation or does it happen immediately (optional)
+				animationType: 'fade',
+				passProps: {
+					current: this.state.current
+				}
+			});
+		}
+	}
+
 	savePlace() {
 		storage.save({
 			key: 'destination',
@@ -243,6 +257,12 @@ class Traffic extends Component {
 					>
 						<Text style={styles.buttonText}>Save places</Text>
 					</TouchableOpacity>
+					<TouchableOpacity
+						onPress={() => this.showElevation()}
+						style={[styles.bubble, styles.button]}
+					>
+						<Text style={styles.buttonText}>Show Elevation</Text>
+					</TouchableOpacity>
 				</View>
 
 				<Card title="Current Location" containerStyle={styles.card}>
@@ -276,16 +296,20 @@ class Traffic extends Component {
 					</View>
 				</Card>
 
-				<Card title="Distance & time" containerStyle={styles.card}>
-					<View style={[styles.listHeading]}>
-						<Text style={styles.listHeadingLeft}>
-							{this.state.distance}
-						</Text>
-						<Text style={styles.listHeadingRight}>
-							{this.state.duration}
-						</Text>
-					</View>
-				</Card>
+				{
+					this.state.showDistance && (
+						<Card title="Distance & time" containerStyle={styles.card}>
+							<View style={[styles.listHeading]}>
+								<Text style={styles.listHeadingLeft}>
+									{this.state.distance}
+								</Text>
+								<Text style={styles.listHeadingRight}>
+									{this.state.duration}
+								</Text>
+							</View>
+						</Card>
+					)
+				}
 
 			</ScrollView>
 		);
