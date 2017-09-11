@@ -97,6 +97,8 @@ class Traffic extends Component {
 					destination
 				})
 			}
+		}).catch(error => {
+			console.log(error)
 		})
 
 		storage.load({
@@ -107,6 +109,9 @@ class Traffic extends Component {
 					current
 				})
 			}
+		})
+		.catch(error => {
+			console.log(error)
 		})
 	}
 
@@ -134,7 +139,7 @@ class Traffic extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		
+
 	}
 
 	_onNavigatorEvent(event) {
@@ -147,10 +152,10 @@ class Traffic extends Component {
 
 	openSearchModal(destination) {
     RNGooglePlaces.openAutocompleteModal()
-    .then((destination) => {
-		this.setState({
-			[destination]: destination
-		})
+    .then((place) => {
+			this.setState({
+				[destination]: place
+			})
 		// destination represents user's selection from the
 		// suggestions and it is a simplified Google Place object.
     })
