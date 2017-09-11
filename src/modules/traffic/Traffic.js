@@ -16,6 +16,7 @@ import Swiper from 'react-native-swiper';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Storage from 'react-native-storage';
+import axios from 'axios';
 
 import * as moviesActions from './traffic.actions';
 import CardOne from './components/CardOne';
@@ -53,15 +54,17 @@ const storage = new Storage({
 
 	// cache data in the memory. default is true.
 	enableCache: true
+});
 
-})
+const DISTANCE_API_URL = "https://maps.googleapis.com/maps/api/distancematrix/json";
+
 
 class Traffic extends Component {
 	constructor(props) {
 		super(props);
 
 		this.state = {
-			place: {
+			destination: {
 
 			},
 			current: {
@@ -72,13 +75,26 @@ class Traffic extends Component {
 		this.props.navigator.setOnNavigatorEvent(this._onNavigatorEvent.bind(this));
 	}
 
+	getDistance(startLoc, destinationLoc) {
+    axios.get(`${DISTANCE_API_URL}?origins=${startLoc}&destinations=${destinationLoc}&key=${GOOGLE_API_KEY}&units=imperial`).then(res => {
+      this.setState({
+        duration: res.data.rows[0].elements[0].duration.text,
+        distance: res.data.rows[0].elements[0].distance.text
+      })
+    });
+  }
+
+	getLocationString(pos) {
+    return `${pos.latitude},${pos.longitude}`;
+  }
+
 	loadState() {
 		storage.load({
 			key: 'destination'
-		}).then(place => {
-			if(place) {
+		}).then(destination => {
+			if(destination) {
 				this.setState({
-					place
+					destination
 				})
 			}
 		})
@@ -104,7 +120,7 @@ class Traffic extends Component {
 		this.setState({
 			current: currentLocation[0]
 		})
-		// place represents user's selection from the
+		// destination represents user's selection from the
 		// suggestions and it is a simplified Google Place object.
 		})
 		.catch(error => {
@@ -121,7 +137,9 @@ class Traffic extends Component {
 	}
 
 	componentWillUpdate(nextProps, nextState) {
-
+		if(nextState.destination && nextState.current) {
+			this.getDistance(this.getLocationString(nextState.current), this.getLocationString(nextState.destination));
+		}
 	}
 
 
@@ -135,11 +153,11 @@ class Traffic extends Component {
 
 	openSearchModal(destination) {
     RNGooglePlaces.openAutocompleteModal()
-    .then((place) => {
+    .then((destination) => {
 		this.setState({
-			[destination]: place
+			[destination]: destination
 		})
-		// place represents user's selection from the
+		// destination represents user's selection from the
 		// suggestions and it is a simplified Google Place object.
     })
     .catch(error => this.setState({
@@ -148,7 +166,7 @@ class Traffic extends Component {
   }
 
 	getRoutes() {
-		if(this.state.current && this.state.place) {
+		if(this.state.current && this.state.destination) {
 			this.props.navigator.showModal({
 				screen: 'movieapp.MapView',
 				title: 'MapView',
@@ -156,7 +174,7 @@ class Traffic extends Component {
 				animationType: 'fade',
 				passProps: {
 					current: this.state.current,
-					destination: this.state.place
+					destination: this.state.destination
 				}
 			});
 		}
@@ -166,7 +184,7 @@ class Traffic extends Component {
 	savePlace() {
 		storage.save({
 			key: 'destination',
-			data: this.state.place
+			data: this.state.destination
 		})
 		storage.save({
 			key: 'origin',
@@ -194,7 +212,7 @@ class Traffic extends Component {
 
 				<View style={styles.buttonContainer}>
 					<TouchableOpacity
-						onPress={this.openSearchModal.bind(this, 'place')}
+						onPress={this.openSearchModal.bind(this, 'destination')}
 						style={[styles.bubble, styles.button]}
 					>
 						<Text style={styles.buttonText}>Pick destination</Text>
@@ -247,20 +265,17 @@ class Traffic extends Component {
 				<Card title="Place to go" containerStyle={styles.card}>
 					<View style={styles.listHeading}>
 						<Text style={styles.listHeadingLeft}>Address: </Text>
-						<Text style={styles.descriptionText}>{this.state.place.address}</Text>
+						<Text style={styles.descriptionText}>{this.state.destination.address}</Text>
 					</View>
 					<View style={styles.listHeading}>
 						<Text style={styles.listHeadingLeft}>Latitude: </Text>
-						<Text style={styles.listHeadingRight}>{this.state.place.latitude}</Text>
+						<Text style={styles.listHeadingRight}>{this.state.destination.latitude}</Text>
 					</View>
 					<View style={styles.listHeading}>
 						<Text style={styles.listHeadingLeft}>Longitude: </Text>
-						<Text style={styles.listHeadingRight}>{this.state.place.longitude}</Text>
+						<Text style={styles.listHeadingRight}>{this.state.destination.longitude}</Text>
 					</View>
 				</Card>
-
-
-
 
 			</ScrollView>
 		);
