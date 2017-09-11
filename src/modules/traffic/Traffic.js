@@ -134,14 +134,8 @@ class Traffic extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
+		
 	}
-
-	componentWillUpdate(nextProps, nextState) {
-		if(nextState.destination && nextState.current) {
-			this.getDistance(this.getLocationString(nextState.current), this.getLocationString(nextState.destination));
-		}
-	}
-
 
 	_onNavigatorEvent(event) {
 		if (event.type === 'NavBarButtonPress') {
@@ -274,6 +268,17 @@ class Traffic extends Component {
 					<View style={styles.listHeading}>
 						<Text style={styles.listHeadingLeft}>Longitude: </Text>
 						<Text style={styles.listHeadingRight}>{this.state.destination.longitude}</Text>
+					</View>
+				</Card>
+
+				<Card title="Distance & time" containerStyle={styles.card}>
+					<View style={[styles.listHeading]}>
+						<Text style={styles.listHeadingLeft}>
+							{this.state.distance}
+						</Text>
+						<Text style={styles.listHeadingRight}>
+							{this.state.duration}
+						</Text>
 					</View>
 				</Card>
 
