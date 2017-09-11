@@ -70,22 +70,32 @@ class Traffic extends Component {
 		};
 
 		this.props.navigator.setOnNavigatorEvent(this._onNavigatorEvent.bind(this));
-
-		this.loadState();
 	}
 
 	loadState() {
 		storage.load({
 			key: 'destination'
 		}).then(place => {
-			this.setState({
-				place
-			})
+			if(place) {
+				this.setState({
+					place
+				})
+			}
+		})
+
+		storage.load({
+			key: 'origin'
+		}).then(current => {
+			if(current) {
+				this.setState({
+					current
+				})
+			}
 		})
 	}
 
 	componentWillMount() {
-		this.getMyLocation();
+		this.loadState();
 	}
 
 	getMyLocation() {
@@ -101,6 +111,10 @@ class Traffic extends Component {
 			this.setState({
 			error: error.message
 		})});  // error is a Javascript Error object
+	}
+
+	useMyLocation() {
+		this.getMyLocation();
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -119,12 +133,11 @@ class Traffic extends Component {
 		}
 	}
 
-	openSearchModal() {
+	openSearchModal(destination) {
     RNGooglePlaces.openAutocompleteModal()
     .then((place) => {
 		this.setState({
-			place,
-			showRoute: false
+			[destination]: place
 		})
 		// place represents user's selection from the
 		// suggestions and it is a simplified Google Place object.
@@ -155,6 +168,10 @@ class Traffic extends Component {
 			key: 'destination',
 			data: this.state.place
 		})
+		storage.save({
+			key: 'origin',
+			data: this.state.current
+		})
 	}
 
 
@@ -168,12 +185,48 @@ class Traffic extends Component {
 		const iconPopular = <Icon name="md-heart" size={21} color="#9F9F9F" style={{ width: 22 }} />;
 
 		return (
-			<View style={styles.container}>
+			<ScrollView style={styles.container}>
 				{
 					!!this.state.error && (
 						<Text style={styles.descriptionText}>{this.state.error}</Text>
 					)
 				}
+
+				<View style={styles.buttonContainer}>
+					<TouchableOpacity
+						onPress={this.openSearchModal.bind(this, 'place')}
+						style={[styles.bubble, styles.button]}
+					>
+						<Text style={styles.buttonText}>Pick destination</Text>
+					</TouchableOpacity>
+					<TouchableOpacity
+						onPress={this.openSearchModal.bind(this, 'current')}
+						style={[styles.bubble, styles.button]}
+					>
+						<Text style={styles.buttonText}>Pick origin</Text>
+					</TouchableOpacity>
+					<TouchableOpacity
+						onPress={this.useMyLocation.bind(this)}
+						style={[styles.bubble, styles.button]}
+					>
+						<Text style={styles.buttonText}>Use current</Text>
+					</TouchableOpacity>
+				</View>
+
+				<View style={styles.buttonContainer}>
+					<TouchableOpacity
+						onPress={() => this.getRoutes()}
+						style={[styles.bubble, styles.button]}
+					>
+						<Text style={styles.buttonText}>Show routes</Text>
+					</TouchableOpacity>
+					<TouchableOpacity
+						onPress={() => this.savePlace()}
+						style={[styles.bubble, styles.button]}
+					>
+						<Text style={styles.buttonText}>Save places</Text>
+					</TouchableOpacity>
+				</View>
 
 				<Card title="Current Location" containerStyle={styles.card}>
 					<View style={styles.listHeading}>
@@ -206,22 +259,10 @@ class Traffic extends Component {
 					</View>
 				</Card>
 
-				<View style={styles.buttonGroup}>
-					<Button
-						title='Pick a Place'
-						onPress={() => this.openSearchModal()}>
-					</Button>
-					<Button
-						title='Get routes'
-						onPress={() => this.getRoutes()}>
-					</Button>
-					<Button
-						title='Save place'
-						onPress={() => this.savePlace()}>
-					</Button>
-				</View>
 
-			</View>
+
+
+			</ScrollView>
 		);
 	}
 }
