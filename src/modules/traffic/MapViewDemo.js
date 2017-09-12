@@ -55,8 +55,16 @@ class MapViewDemo extends Component {
         coords,
         routes: res.data.routes,
         currentRoute: 0
-      })
+      });
+      this.zoom();
       return coords
+    });
+  }
+
+  zoom() {
+    this.map.fitToCoordinates(this.state.coords, {
+      edgePadding: { top: 100, right: 100, bottom: 100, left: 100 },
+      animated: true,
     });
   }
 
@@ -65,7 +73,7 @@ class MapViewDemo extends Component {
       this.setState({
         duration: res.data.rows[0].elements[0].duration.text,
         distance: res.data.rows[0].elements[0].distance.text
-      })
+      });
     }).catch(error => {
       console.log(error)
     })
@@ -136,7 +144,7 @@ class MapViewDemo extends Component {
                 {this.state.distance},
                 {this.state.duration}
               </Text>
-            </View>            
+            </View>
           )
         }
         <View style={styles.buttonContainer}>
