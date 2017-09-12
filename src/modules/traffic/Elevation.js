@@ -36,6 +36,7 @@ class Elevation extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      marker: props.current,
       region: {
         latitude: props.current.latitude,
         longitude: props.current.longitude,
@@ -69,6 +70,7 @@ class Elevation extends Component {
   }
 
   render() {
+    const { marker } = this.state;
     return (
       <View style={styles.container}>
         <MapView
@@ -77,6 +79,9 @@ class Elevation extends Component {
           style={styles.map}
           initialRegion={this.state.region}
           onRegionChange={region => this.onRegionChange(region)}>
+          <MapView.Marker
+            coordinate={marker}
+          />
         </MapView>
 
         <View style={[styles.bubble, styles.latlng]}>
