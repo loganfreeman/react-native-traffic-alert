@@ -61,6 +61,14 @@ class Elevation extends Component {
     this.setState({ region });
   }
 
+  onLongPress(e) {
+    let data = e.nativeEvent ? e.nativeEvent : e;
+    let markers = this.state.markers.concat([data.coordinate]);
+    this.setState({
+      markers
+    })
+  }
+
   getMyElevation(locations) {
     axios.get(`${ELEVATION_API_URL}?locations=${locations}&key=${GOOGLE_API_KEY}`).then(res => {
       this.setState({
@@ -78,6 +86,7 @@ class Elevation extends Component {
           mapType={MAP_TYPES.TERRAIN}
           style={styles.map}
           initialRegion={this.state.region}
+          onLongPress={this.onLongPress.bind(this)}
           onRegionChange={region => this.onRegionChange(region)}>
 
           {this.state.markers.map((marker, i) => (
