@@ -86,7 +86,7 @@ class Elevation extends Component {
 
         <View style={[styles.bubble, styles.latlng]}>
           <Text style={{ textAlign: 'center' }}>
-            {this.state.elevation}
+            Elevation: {Math.floor(this.state.elevation)}
           </Text>
         </View>
 
