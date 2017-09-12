@@ -66,7 +66,8 @@ class Elevation extends Component {
     let markers = this.state.markers.concat([data.coordinate]);
     this.setState({
       markers
-    })
+    });
+    this.getMyElevation(this.getLocationString(data.coordinate));
   }
 
   getMyElevation(locations) {
