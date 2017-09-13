@@ -16,7 +16,7 @@ export function extractTrafficReport(html) {
 
   $('#list_constructionlist').children().each((index, child) => {
     let descriptions = $(child).text().split(/\r?\n/).filter(s => s.trim().length > 0).map(s => s.trim());
-    let zoomto = $(child).find('.zoomincidents a').text();
+    let zoomto = $(child).find('.zoomincidents a').attr('onclick').match('zoom_to\((.*)\)')[1].replace(/'/g, '');
     constructions.push({
       descriptions,
       zoomto
