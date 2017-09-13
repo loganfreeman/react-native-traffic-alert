@@ -49,6 +49,9 @@ class TrafficReport extends Component {
       coords: [],
       routes: []
     };
+  }
+
+  componentDidMount() {
     this.getMyLocation();
   }
 
@@ -56,7 +59,7 @@ class TrafficReport extends Component {
 		RNGooglePlaces.getCurrentPlace()
 		.then((latlng) => {
         let region = latlng[0];
-		    this.map.animateToCoordinate(region);
+		    this.map.animateToCoordinate(region, 1000);
         this.setState({ region });
 		// destination represents user's selection from the
 		// suggestions and it is a simplified Google Place object.
@@ -79,13 +82,13 @@ class TrafficReport extends Component {
     this.setState({ region });
   }
 
-  onLongPress(e) {
+  onPress(e) {
     let data = e.nativeEvent ? e.nativeEvent : e;
     let markers = this.state.markers.concat([data.coordinate]);
     this.setState({
       markers
     });
-    this.getMyTrafficReport(this.getLocationString(data.coordinate));
+    this.map.animateToCoordinate(data.coordinate, 1000);
   }
 
 
@@ -99,7 +102,7 @@ class TrafficReport extends Component {
           style={styles.map}
           showsTraffic={true}
           initialRegion={INITIAL_REGION}
-          onLongPress={this.onLongPress.bind(this)}
+          onPress={this.onPress.bind(this)}
           onRegionChange={region => this.onRegionChange(region)}>
 
           {this.state.markers.map((marker, i) => (
