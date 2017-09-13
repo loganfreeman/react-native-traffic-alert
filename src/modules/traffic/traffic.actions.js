@@ -19,7 +19,7 @@ export function retrieveTrafficReport() {
 			dispatch(action);
 		})
 		.catch(error => {
-			console.log(error); //eslint-disable-line
+			console.error(error); //eslint-disable-line
 		});
 	};
 }
