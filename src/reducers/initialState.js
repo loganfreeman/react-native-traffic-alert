@@ -1,6 +1,8 @@
 export default {
 	traffic: {
-
+		report: {
+			
+		}
 	}
 
 };

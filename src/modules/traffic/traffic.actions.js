@@ -1,7 +1,6 @@
 import axios from 'axios';
 import * as types from '../../constants/actionTypes';
 import { KSL_TRAFFIC_URL } from '../../constants/api';
-import axios from 'axios';
 import { extractTrafficReport } from './helper';
 
 

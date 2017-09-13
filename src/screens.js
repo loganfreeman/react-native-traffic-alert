@@ -6,7 +6,7 @@ import Traffic from './modules/traffic/Traffic';
 import MapViewDemo from './modules/traffic/MapViewDemo';
 import Elevation from './modules/traffic/Elevation';
 import Route from './modules/traffic/Route';
-import Report from './modules/traffic/Report';
+import Report from './modules/traffic/TrafficReport';
 
 
 export function registerScreens(store, Provider) {
