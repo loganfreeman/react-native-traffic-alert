@@ -17,3 +17,5 @@ export const STOCKING_URL = "https://dwrapps.utah.gov/fishtrafficing/Fish";
 export const IMDB_URL = "http://www.imdb.com/";
 
 export const GOOGLE_API_KEY = Config.GOOGLE_API_KEY;
+
+export const KSL_TRAFFIC_URL = "https://www.ksl.com/?nid=710#Gmap2";

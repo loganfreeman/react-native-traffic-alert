@@ -1,21 +1,26 @@
 import axios from 'axios';
 import * as types from '../../constants/actionTypes';
-import { TMDB_URL, TMDB_API_KEY } from '../../constants/api';
+import { KSL_TRAFFIC_URL } from '../../constants/api';
+import axios from 'axios';
+import { extractTrafficReport } from './helper';
 
 
-// MOVIE DETAILS
-export function retrieveMovieDetailsSuccess(res) {
+export function retrieveTrafficReportSuccess(report) {
 	return {
-		type: types.RETRIEVE_MOVIE_DETAILS_SUCCESS,
-		details: res.data
+		type: types.RETRIEVE_TRAFFIC_REPORT_SUCCESS,
+		report
 	};
 }
 
-export function retrieveMovieDetails(type, movieId) {
+export function retrieveTrafficReport() {
 	return function (dispatch) {
-		return axios.get(`${TMDB_URL}/${type}/${movieId}?api_key=${TMDB_API_KEY}&append_to_response=casts,images,videos`)
+		return axios.get(KSL_TRAFFIC_URL)
 		.then(res => {
-			dispatch(retrieveMovieDetailsSuccess(res));
+			let action = retrieveTrafficReportSuccess(extractTrafficReport(res.data));
+			dispatch(action);
+		})
+		.catch(error => {
+			console.log(error); //eslint-disable-line
 		});
 	};
 }

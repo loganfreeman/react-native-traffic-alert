@@ -86,6 +86,7 @@ class Elevation extends Component {
           ref={ref => { this.map = ref; }}
           mapType={MAP_TYPES.TERRAIN}
           style={styles.map}
+          showsTraffic={true}
           initialRegion={this.state.region}
           onLongPress={this.onLongPress.bind(this)}
           onRegionChange={region => this.onRegionChange(region)}>
