@@ -53,6 +53,7 @@ class TrafficReport extends Component {
 
   componentDidMount() {
     this.getMyLocation();
+    this.props.actions.retrieveTrafficReport();
   }
 
   getMyLocation() {
