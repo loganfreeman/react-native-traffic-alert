@@ -22,7 +22,7 @@ export function extractTrafficReport(html) {
       incidents.push({
         title: descriptions[0],
         time: descriptions[2],
-        detail: descriptions[1],
+        detail: descriptions[1].split(/\t+/),
         zoomto: extractZoomTo(zoomto)
       })
     }
@@ -36,7 +36,7 @@ export function extractTrafficReport(html) {
       constructions.push({
         title: descriptions[0],
         time: descriptions[2],
-        detail: descriptions[1],
+        detail: descriptions[1].split(/\t+/),
         zoomto: extractZoomTo(zoomto)
       })
     }
