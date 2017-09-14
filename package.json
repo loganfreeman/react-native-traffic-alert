@@ -27,6 +27,7 @@
     "react-native-calendar": "^0.12.3",
     "react-native-config": "^0.3.1",
     "react-native-elements": "^0.16.0",
+    "react-native-google-maps-directions": "^1.1.2",
     "react-native-google-places": "^2.4.2",
     "react-native-htmlview": "^0.12.0",
     "react-native-linear-gradient": "^2.0.0",

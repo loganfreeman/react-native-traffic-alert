@@ -17,6 +17,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import Polyline from '@mapbox/polyline';
+import getDirections from 'react-native-google-maps-directions'
 
 const { width, height } = Dimensions.get('window');
 
@@ -29,6 +30,11 @@ const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 const MAP_DIRECTION_API_URL = "https://maps.googleapis.com/maps/api/directions/json";
 
 const DISTANCE_API_URL = "https://maps.googleapis.com/maps/api/distancematrix/json";
+
+const params = [{
+        key: "layer",
+        value: "t"
+      }];
 
 class MapViewDemo extends Component {
   constructor(props) {
@@ -43,13 +49,13 @@ class MapViewDemo extends Component {
       coords: [],
       routes: []
     };
-
-    this.getDirections(this.getLocationString(props.current), this.getLocationString(props.destination));
-    this.getDistance(this.getLocationString(props.current), this.getLocationString(props.destination));
   }
 
   componentDidMount() {
+    const { current, destination } = this.props;
     this.props.actions.retrieveTrafficReport();
+    this.getDirections(this.getLocationString(current), this.getLocationString(destination));
+    this.getDistance(this.getLocationString(current), this.getLocationString(destination));
   }
 
   getDirections(startLoc, destinationLoc) {
@@ -127,9 +133,18 @@ class MapViewDemo extends Component {
     this.setState({ region });
   }
 
+  handleGetDirections(source, destination) {
+    getDirections({
+      source,
+      destination,
+      params
+    })
+  }
+
   render() {
     const { incidents, constructions} = this.props.report;
     const incidentsCount = (incidents && incidents.length) || 0;
+    const { current, destination } = this.props;
     return (
       <View style={styles.container}>
         <MapView
@@ -171,10 +186,10 @@ class MapViewDemo extends Component {
             <Text style={styles.buttonText}>Show Alternative</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => this.showRoute()}
+            onPress={() => this.handleGetDirections(current, destination)}
             style={[styles.bubble, styles.button]}
           >
-            <Text style={styles.buttonText}>Show route detail</Text>
+            <Text style={styles.buttonText}>Get directions</Text>
           </TouchableOpacity>
         </View>
       </View>
