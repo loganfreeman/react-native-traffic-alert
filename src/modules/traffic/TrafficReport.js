@@ -76,7 +76,6 @@ class TrafficReport extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-
 	}
 
   onRegionChange(region) {
