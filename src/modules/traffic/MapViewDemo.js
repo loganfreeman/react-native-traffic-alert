@@ -5,7 +5,8 @@ import {
   Text,
   Dimensions,
   TouchableOpacity,
-  Platform
+  Platform,
+  Image
 } from 'react-native';
 
 import MapView, { MAP_TYPES } from 'react-native-maps';
@@ -52,8 +53,12 @@ class MapViewDemo extends Component {
   }
 
   componentDidMount() {
-    const { current, destination } = this.props;
     this.props.actions.retrieveTrafficReport();
+
+  }
+
+  onMapReady() {
+    const { current, destination } = this.props;
     this.getDirections(this.getLocationString(current), this.getLocationString(destination));
     this.getDistance(this.getLocationString(current), this.getLocationString(destination));
   }
@@ -145,12 +150,15 @@ class MapViewDemo extends Component {
     const { incidents, constructions} = this.props.report;
     const incidentsCount = (incidents && incidents.length) || 0;
     const { current, destination } = this.props;
+    const incidentImgSource = require('../../img/incident.png');
+    const constructionImgSource = require('../../img/traffic-cone.png');
     return (
       <View style={styles.container}>
         <MapView
           ref={ref => { this.map = ref; }}
           mapType={MAP_TYPES.TERRAIN}
           style={styles.map}
+          onMapReady={this.onMapReady.bind(this)}
           initialRegion={this.state.region}
           onRegionChange={region => this.onRegionChange(region)}>
           <MapView.Polyline
@@ -159,12 +167,22 @@ class MapViewDemo extends Component {
             strokeColor="blue"/>
             {
               incidents && incidents.map((incident, i) => (
-                <MapView.Marker coordinate={incident.zoomto} key={i} image={require('../../img/incident.png')}/>
+                <MapView.Marker coordinate={incident.zoomto} key={i}>
+                  <Image
+                		source={incidentImgSource}
+                		style={{ height: 40, width: 40 }}
+                	/>
+                </MapView.Marker>
               ))
             }
             {
               constructions && constructions.map((construction, i) => (
-                <MapView.Marker coordinate={construction.zoomto} key={i+incidentsCount} image={require('../../img/traffic-cone.png')}/>
+                <MapView.Marker coordinate={construction.zoomto} key={i+incidentsCount}>
+                  <Image
+                    source={constructionImgSource}
+                    style={{ height: 40, width: 40 }}
+                  />
+              </MapView.Marker>
               ))
             }
         </MapView>
