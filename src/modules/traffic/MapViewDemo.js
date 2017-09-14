@@ -48,6 +48,10 @@ class MapViewDemo extends Component {
     this.getDistance(this.getLocationString(props.current), this.getLocationString(props.destination));
   }
 
+  componentDidMount() {
+    this.props.actions.retrieveTrafficReport();
+  }
+
   getDirections(startLoc, destinationLoc) {
     axios.get(`${MAP_DIRECTION_API_URL}?origin=${startLoc}&destination=${destinationLoc}&key=${GOOGLE_API_KEY}&alternatives=true`).then(res => {
       let coords = this.calculateCoords(res.data.routes[0].overview_polyline.points);
@@ -124,6 +128,8 @@ class MapViewDemo extends Component {
   }
 
   render() {
+    const { incidents, constructions} = this.props.report;
+    const incidentsCount = (incidents && incidents.length) || 0;
     return (
       <View style={styles.container}>
         <MapView
@@ -134,8 +140,18 @@ class MapViewDemo extends Component {
           onRegionChange={region => this.onRegionChange(region)}>
           <MapView.Polyline
             coordinates={this.state.coords}
-            strokeWidth={4}
-            strokeColor="red"/>
+            strokeWidth={5}
+            strokeColor="blue"/>
+            {
+              incidents && incidents.map((incident, i) => (
+                <MapView.Marker coordinate={incident.zoomto} key={i} image={require('../../img/incident.png')}/>
+              ))
+            }
+            {
+              constructions && constructions.map((construction, i) => (
+                <MapView.Marker coordinate={construction.zoomto} key={i+incidentsCount} image={require('../../img/traffic-cone.png')}/>
+              ))
+            }
         </MapView>
         {
           this.state.duration && this.state.distance && (
@@ -170,7 +186,8 @@ MapViewDemo.propTypes = {
 	actions: PropTypes.object.isRequired,
 	navigator: PropTypes.object,
   current: PropTypes.object.isRequired,
-  destination: PropTypes.object.isRequired
+  destination: PropTypes.object.isRequired,
+  report: PropTypes.object.isRequired
 };
 
 let navigatorStyle = {};
@@ -196,6 +213,7 @@ MapViewDemo.navigatorStyle = {
 
 function mapStateToProps(state, ownProps) {
 	return {
+    report: state.traffic.report
 	};
 }
 
