@@ -76,6 +76,7 @@ class TrafficReport extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+
 	}
 
   onRegionChange(region) {
@@ -94,6 +95,10 @@ class TrafficReport extends Component {
 
   render() {
     const { marker } = this.state;
+    const { incidents, constructions} = this.props.report;
+    const myMarkersCount = this.state.markers.length;
+    const incidentsCount = (incidents && incidents.length) || 0;
+    console.log(incidents);
     return (
       <View style={styles.container}>
         <MapView
@@ -108,6 +113,16 @@ class TrafficReport extends Component {
           {this.state.markers.map((marker, i) => (
             <MapView.Marker coordinate={marker} key={i}/>
           ))
+          }
+          {
+            incidents && incidents.map((incident, i) => (
+              <MapView.Marker coordinate={incident.zoomto} key={i+myMarkersCount} image={require('../../img/incident.png')}/>
+            ))
+          }
+          {
+            constructions && constructions.map((construction, i) => (
+              <MapView.Marker coordinate={construction.zoomto} key={i+myMarkersCount+incidentsCount} image={require('../../img/traffic-cone.png')}/>
+            ))
           }
         </MapView>
 
