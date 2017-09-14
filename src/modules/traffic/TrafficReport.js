@@ -19,6 +19,8 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import Polyline from '@mapbox/polyline';
 import RNGooglePlaces from 'react-native-google-places';
+import CustomCallout from './components/CustomCallout';
+import { Card } from 'react-native-elements';
 
 const { width, height } = Dimensions.get('window');
 
@@ -87,20 +89,9 @@ class TrafficReport extends Component {
     this.setState({ region });
   }
 
-  onPress(e) {
-    let data = e.nativeEvent ? e.nativeEvent : e;
-    let markers = this.state.markers.concat([data.coordinate]);
-    this.setState({
-      markers
-    });
-    this.map.animateToCoordinate(data.coordinate, 1000);
-  }
-
-
   render() {
     const { marker } = this.state;
     const { incidents, constructions} = this.props.report;
-    const myMarkersCount = this.state.markers.length;
     const incidentsCount = (incidents && incidents.length) || 0;
     const incidentImgSource = require('../../img/incident.png');
     const constructionImgSource = require('../../img/traffic-cone.png');
@@ -113,16 +104,10 @@ class TrafficReport extends Component {
           showsTraffic={true}
           initialRegion={INITIAL_REGION}
           onMapReady={this.onMapReady.bind(this)}
-          onPress={this.onPress.bind(this)}
           onRegionChange={region => this.onRegionChange(region)}>
-
-          {this.state.markers.map((marker, i) => (
-            <MapView.Marker coordinate={marker} key={i}/>
-          ))
-          }
           {
             incidents && incidents.map((incident, i) => (
-              <MapView.Marker coordinate={incident.zoomto} key={i+myMarkersCount}>
+              <MapView.Marker coordinate={incident.zoomto} key={i}>
                 <Image
                   source={incidentImgSource}
                   style={{ height: 40, width: 40 }}
@@ -132,7 +117,7 @@ class TrafficReport extends Component {
           }
           {
             constructions && constructions.map((construction, i) => (
-              <MapView.Marker coordinate={construction.zoomto} key={i+myMarkersCount+incidentsCount}>
+              <MapView.Marker coordinate={construction.zoomto} key={i+incidentsCount}>
                   <Image
                     source={constructionImgSource}
                     style={{ height: 40, width: 40 }}
