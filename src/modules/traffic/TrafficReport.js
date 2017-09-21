@@ -5,7 +5,8 @@ import {
   Text,
   Dimensions,
   TouchableOpacity,
-  Platform
+  Platform,
+  Image
 } from 'react-native';
 
 import MapView, { MAP_TYPES } from 'react-native-maps';
@@ -18,6 +19,8 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import Polyline from '@mapbox/polyline';
 import RNGooglePlaces from 'react-native-google-places';
+import CustomCallout from './components/CustomCallout';
+import { Card } from 'react-native-elements';
 
 const { width, height } = Dimensions.get('window');
 
@@ -52,8 +55,11 @@ class TrafficReport extends Component {
   }
 
   componentDidMount() {
-    this.getMyLocation();
     this.props.actions.retrieveTrafficReport();
+  }
+
+  onMapReady() {
+    this.getMyLocation();
   }
 
   getMyLocation() {
@@ -76,24 +82,19 @@ class TrafficReport extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+
 	}
 
   onRegionChange(region) {
     this.setState({ region });
   }
 
-  onPress(e) {
-    let data = e.nativeEvent ? e.nativeEvent : e;
-    let markers = this.state.markers.concat([data.coordinate]);
-    this.setState({
-      markers
-    });
-    this.map.animateToCoordinate(data.coordinate, 1000);
-  }
-
-
   render() {
     const { marker } = this.state;
+    const { incidents, constructions} = this.props.report;
+    const incidentsCount = (incidents && incidents.length) || 0;
+    const incidentImgSource = require('../../img/incident.png');
+    const constructionImgSource = require('../../img/traffic-cone.png');
     return (
       <View style={styles.container}>
         <MapView
@@ -102,12 +103,27 @@ class TrafficReport extends Component {
           style={styles.map}
           showsTraffic={true}
           initialRegion={INITIAL_REGION}
-          onPress={this.onPress.bind(this)}
+          onMapReady={this.onMapReady.bind(this)}
           onRegionChange={region => this.onRegionChange(region)}>
-
-          {this.state.markers.map((marker, i) => (
-            <MapView.Marker coordinate={marker} key={i}/>
-          ))
+          {
+            incidents && incidents.map((incident, i) => (
+              <MapView.Marker coordinate={incident.zoomto} key={i}>
+                <Image
+                  source={incidentImgSource}
+                  style={{ height: 40, width: 40 }}
+                />
+              </MapView.Marker>
+            ))
+          }
+          {
+            constructions && constructions.map((construction, i) => (
+              <MapView.Marker coordinate={construction.zoomto} key={i+incidentsCount}>
+                  <Image
+                    source={constructionImgSource}
+                    style={{ height: 40, width: 40 }}
+                  />
+              </MapView.Marker>
+            ))
           }
         </MapView>
 
