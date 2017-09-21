@@ -24,25 +24,19 @@ react-native run-android
 Clone this repo
 
 ```sh
-$ git clone git@github.com:JuneDomingo/movieapp.git
-$ cd movieapp
+$ git clone https://github.com/loganfreeman/react-native-traffic-alert
+$ cd react-native-traffic-alert
 $ yarn install or npm install
 ```
 
 Create `.env` file in your root directory and add the following
 
 ```sh
-TMDB_URL=https://api.themoviedb.org/3
-TMDB_IMG_URL=https://image.tmdb.org/t/p
-TMDB_API_KEY=your_tmdb_api_key_here
-
-YOUTUBE_URL=https://www.googleapis.com/youtube/v3/videos
-YOUTUBE_API_KEY=your_youtube_api_key_here
+GOOGLE_API_KEY=
 
 ```
-Get api key -
-[TMDB](https://www.themoviedb.org/) -
-[Youtube](https://console.developers.google.com)
+
+[GET Google API Key](https://developers.google.com/maps/documentation/javascript/get-api-key)
 
 ### How to start
 ```sh
